@@ -678,7 +678,7 @@ GameObject:
   - component: {fileID: 193873106}
   - component: {fileID: 193873105}
   - component: {fileID: 193873104}
-  - component: {fileID: 193873103}
+  - component: {fileID: 193873108}
   m_Layer: 0
   m_Name: Wire3
   m_TagString: Plug
@@ -686,23 +686,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &193873103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 193873102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c1b645d33b4c41ee8ba2c437d78cba4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SimpleCableComponent
-  endPoint: {fileID: 897237305}
-  cableMaterial: {fileID: 2100000, guid: 7a615f1ecf13340eaafefd7308ab1803, type: 2}
-  cableLength: 0.5
-  totalSegments: 5
-  cableWidth: 0.02
 --- !u!114 &193873104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -784,6 +767,26 @@ Transform:
   - {fileID: 897237305}
   m_Father: {fileID: 1495868239}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &193873108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193873102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fd305dd82ba46518ee7a1a1e3e4808, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ImprovedCableComponent
+  endPoint: {fileID: 897237305}
+  cableMaterial: {fileID: 2100000, guid: 7a615f1ecf13340eaafefd7308ab1803, type: 2}
+  cableLength: 0.5
+  totalSegments: 8
+  segmentsPerUnit: 2
+  cableWidth: 0.02
+  verletIterations: 3
+  solverIterations: 3
 --- !u!1 &239131959
 GameObject:
   m_ObjectHideFlags: 0
@@ -918,7 +921,7 @@ GameObject:
   - component: {fileID: 272199335}
   - component: {fileID: 272199334}
   - component: {fileID: 272199333}
-  - component: {fileID: 272199332}
+  - component: {fileID: 272199337}
   m_Layer: 0
   m_Name: Wire2
   m_TagString: Plug
@@ -926,23 +929,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &272199332
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 272199331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c1b645d33b4c41ee8ba2c437d78cba4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SimpleCableComponent
-  endPoint: {fileID: 1694681510}
-  cableMaterial: {fileID: 2100000, guid: 7a615f1ecf13340eaafefd7308ab1803, type: 2}
-  cableLength: 0.5
-  totalSegments: 5
-  cableWidth: 0.02
 --- !u!114 &272199333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1024,6 +1010,26 @@ Transform:
   - {fileID: 1694681510}
   m_Father: {fileID: 1495868239}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &272199337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272199331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fd305dd82ba46518ee7a1a1e3e4808, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ImprovedCableComponent
+  endPoint: {fileID: 1694681510}
+  cableMaterial: {fileID: 2100000, guid: 7a615f1ecf13340eaafefd7308ab1803, type: 2}
+  cableLength: 0.5
+  totalSegments: 8
+  segmentsPerUnit: 2
+  cableWidth: 0.02
+  verletIterations: 3
+  solverIterations: 3
 --- !u!114 &287381725 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 229710696117312062, guid: 9fa0825d6b962924e8124b0b7d0595f8, type: 3}
@@ -1247,7 +1253,7 @@ GameObject:
   - component: {fileID: 346618894}
   - component: {fileID: 346618893}
   - component: {fileID: 346618892}
-  - component: {fileID: 346618891}
+  - component: {fileID: 346618896}
   m_Layer: 0
   m_Name: Wire5
   m_TagString: Plug
@@ -1255,23 +1261,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &346618891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 346618890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c1b645d33b4c41ee8ba2c437d78cba4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SimpleCableComponent
-  endPoint: {fileID: 2054719050}
-  cableMaterial: {fileID: 2100000, guid: 7a615f1ecf13340eaafefd7308ab1803, type: 2}
-  cableLength: 0.5
-  totalSegments: 5
-  cableWidth: 0.02
 --- !u!114 &346618892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1353,6 +1342,26 @@ Transform:
   - {fileID: 2054719050}
   m_Father: {fileID: 1495868239}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &346618896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346618890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fd305dd82ba46518ee7a1a1e3e4808, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ImprovedCableComponent
+  endPoint: {fileID: 2054719050}
+  cableMaterial: {fileID: 2100000, guid: 7a615f1ecf13340eaafefd7308ab1803, type: 2}
+  cableLength: 0.5
+  totalSegments: 8
+  segmentsPerUnit: 2
+  cableWidth: 0.02
+  verletIterations: 3
+  solverIterations: 3
 --- !u!4 &377654263 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5568758619435239319, guid: 46fdef3df9a5a354caf7692f85e5eff2, type: 3}
@@ -1599,7 +1608,7 @@ GameObject:
   - component: {fileID: 483613187}
   - component: {fileID: 483613186}
   - component: {fileID: 483613185}
-  - component: {fileID: 483613184}
+  - component: {fileID: 483613189}
   m_Layer: 0
   m_Name: Wire1
   m_TagString: Plug
@@ -1607,23 +1616,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &483613184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 483613183}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c1b645d33b4c41ee8ba2c437d78cba4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SimpleCableComponent
-  endPoint: {fileID: 2143496285}
-  cableMaterial: {fileID: 2100000, guid: 7a615f1ecf13340eaafefd7308ab1803, type: 2}
-  cableLength: 0.5
-  totalSegments: 5
-  cableWidth: 0.02
 --- !u!114 &483613185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1705,6 +1697,26 @@ Transform:
   - {fileID: 2143496285}
   m_Father: {fileID: 1495868239}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &483613189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483613183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fd305dd82ba46518ee7a1a1e3e4808, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ImprovedCableComponent
+  endPoint: {fileID: 2143496285}
+  cableMaterial: {fileID: 2100000, guid: 7a615f1ecf13340eaafefd7308ab1803, type: 2}
+  cableLength: 0.5
+  totalSegments: 8
+  segmentsPerUnit: 2
+  cableWidth: 0.02
+  verletIterations: 3
+  solverIterations: 3
 --- !u!1001 &507044311
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3508,7 +3520,7 @@ GameObject:
   - component: {fileID: 1767475183}
   - component: {fileID: 1767475182}
   - component: {fileID: 1767475181}
-  - component: {fileID: 1767475180}
+  - component: {fileID: 1767475185}
   m_Layer: 0
   m_Name: Wire4
   m_TagString: Plug
@@ -3516,23 +3528,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1767475180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1767475179}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c1b645d33b4c41ee8ba2c437d78cba4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SimpleCableComponent
-  endPoint: {fileID: 1486203771}
-  cableMaterial: {fileID: 2100000, guid: 7a615f1ecf13340eaafefd7308ab1803, type: 2}
-  cableLength: 0.5
-  totalSegments: 5
-  cableWidth: 0.02
 --- !u!114 &1767475181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3614,6 +3609,26 @@ Transform:
   - {fileID: 1486203771}
   m_Father: {fileID: 1495868239}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1767475185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767475179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fd305dd82ba46518ee7a1a1e3e4808, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ImprovedCableComponent
+  endPoint: {fileID: 1486203771}
+  cableMaterial: {fileID: 2100000, guid: 7a615f1ecf13340eaafefd7308ab1803, type: 2}
+  cableLength: 0.5
+  totalSegments: 8
+  segmentsPerUnit: 2
+  cableWidth: 0.02
+  verletIterations: 3
+  solverIterations: 3
 --- !u!1 &1831527684
 GameObject:
   m_ObjectHideFlags: 0
