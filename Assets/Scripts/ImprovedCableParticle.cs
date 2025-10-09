@@ -47,14 +47,14 @@ public class ImprovedCableParticle
                     case RigidbodyInterpolation.Interpolate:
                         // Predicción suave del movimiento
                         Vector3 predictedPos = boundRigidbody.position + 
-                                             (boundRigidbody.velocity * Time.fixedDeltaTime) * 0.5f;
+                                             (boundRigidbody.linearVelocity * Time.fixedDeltaTime) * 0.5f;
                         UpdatePosition(predictedPos);
                         break;
                         
                     case RigidbodyInterpolation.Extrapolate:
                         // Predicción completa del movimiento
                         Vector3 extrapolatedPos = boundRigidbody.position + 
-                                                (boundRigidbody.velocity * Time.fixedDeltaTime);
+                                                (boundRigidbody.linearVelocity * Time.fixedDeltaTime);
                         UpdatePosition(extrapolatedPos);
                         break;
                         
