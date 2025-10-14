@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Versi√≥n mejorada de CableParticle con interpolaci√≥n de Rigidbody
+/// VersiÛn mejorada de CableParticle con interpolaciÛn de Rigidbody
 /// </summary>
 public class ImprovedCableParticle
 {
@@ -27,40 +27,40 @@ public class ImprovedCableParticle
     }
 
     /// <summary>
-    /// MEJORA: Incluye interpolaci√≥n de Rigidbody para movimiento m√°s suave
+    /// MEJORA: Incluye interpolaciÛn de Rigidbody para movimiento m·s suave
     /// </summary>
     public void UpdateVerlet(Vector3 gravity)
     {
         if (IsBound())
         {
-            // Si est√° atado a un objeto
+            // Si est· atado a un objeto
             if (boundRigidbody == null)
             {
-                // Sin Rigidbody - solo seguir posici√≥n
+                // Sin Rigidbody - solo seguir posiciÛn
                 UpdatePosition(boundTransform.position);
             }
             else
             {
-                // MEJORA: Con Rigidbody - considerar interpolaci√≥n y velocidad
+                // MEJORA: Con Rigidbody - considerar interpolaciÛn y velocidad
                 switch (boundRigidbody.interpolation)
                 {
                     case RigidbodyInterpolation.Interpolate:
-                        // Predicci√≥n suave del movimiento
-                        Vector3 predictedPos = boundRigidbody.position + 
+                        // PredicciÛn suave del movimiento
+                        Vector3 predictedPos = boundRigidbody.position +
                                              (boundRigidbody.linearVelocity * Time.fixedDeltaTime) * 0.5f;
                         UpdatePosition(predictedPos);
                         break;
-                        
+
                     case RigidbodyInterpolation.Extrapolate:
-                        // Predicci√≥n completa del movimiento
-                        Vector3 extrapolatedPos = boundRigidbody.position + 
+                        // PredicciÛn completa del movimiento
+                        Vector3 extrapolatedPos = boundRigidbody.position +
                                                 (boundRigidbody.linearVelocity * Time.fixedDeltaTime);
                         UpdatePosition(extrapolatedPos);
                         break;
-                        
+
                     case RigidbodyInterpolation.None:
                     default:
-                        // Sin interpolaci√≥n
+                        // Sin interpolaciÛn
                         UpdatePosition(boundRigidbody.position);
                         break;
                 }
@@ -68,7 +68,7 @@ public class ImprovedCableParticle
         }
         else
         {
-            // Part√≠cula libre - aplicar f√≠sica
+            // PartÌcula libre - aplicar fÌsica
             Vector3 newPosition = position + Velocity + gravity;
             UpdatePosition(newPosition);
         }
@@ -103,4 +103,3 @@ public class ImprovedCableParticle
         return boundTransform != null;
     }
 }
-

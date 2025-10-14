@@ -1,22 +1,22 @@
 using UnityEngine;
 
 /// <summary>
-/// VersiÃ³n mejorada del cable con caracterÃ­sticas del original
+/// Versión mejorada del cable con características del original
 /// </summary>
 public class ImprovedCableComponent : MonoBehaviour
 {
-    [Header("ConfiguraciÃ³n del Cable")]
+    [Header("Configuración del Cable")]
     [SerializeField] private Transform endPoint;
     [SerializeField] private Material cableMaterial;
     [SerializeField] private float cableLength = 0.5f;
     [SerializeField] private int totalSegments = 5;
     [SerializeField] private float segmentsPerUnit = 2f;  // MEJORA: Auto-calcula segmentos
     [SerializeField] private float cableWidth = 0.02f;
-    
-    [Header("ConfiguraciÃ³n de FÃ­sica (MÃ¡s = MÃ¡s Realista)")]
-    [SerializeField] private int verletIterations = 3;    // MEJORA: MÃºltiples iteraciones
-    [SerializeField] private int solverIterations = 3;    // MEJORA: MÃ¡s precisiÃ³n
-    
+
+    [Header("Configuración de Física (Más = Más Realista)")]
+    [SerializeField] private int verletIterations = 3;    // MEJORA: Múltiples iteraciones
+    [SerializeField] private int solverIterations = 3;    // MEJORA: Más precisión
+
     private LineRenderer lineRenderer;
     private ImprovedCableParticle[] particles;
     private int segments;
@@ -33,7 +33,7 @@ public class ImprovedCableComponent : MonoBehaviour
 
     void FixedUpdate()
     {
-        // MEJORA: MÃºltiples iteraciones para mejor estabilidad
+        // MEJORA: Múltiples iteraciones para mejor estabilidad
         for (int i = 0; i < verletIterations; i++)
         {
             UpdateCablePhysics();
@@ -43,27 +43,27 @@ public class ImprovedCableComponent : MonoBehaviour
 
     private void InitializeCable()
     {
-        // MEJORA: Calcula segmentos automÃ¡ticamente si es necesario
+        // MEJORA: Calcula segmentos automáticamente si es necesario
         if (totalSegments > 0)
             segments = totalSegments;
         else
             segments = Mathf.CeilToInt(cableLength * segmentsPerUnit);
-        
-        // Crear partÃ­culas
+
+        // Crear partículas
         particles = new ImprovedCableParticle[segments + 1];
         Vector3 direction = (endPoint.position - transform.position).normalized;
         float segmentLength = cableLength / segments;
-        
+
         for (int i = 0; i <= segments; i++)
         {
             Vector3 position = transform.position + direction * (segmentLength * i);
             particles[i] = new ImprovedCableParticle(position);
         }
-        
-        // Conectar partÃ­culas inicial y final
+
+        // Conectar partículas inicial y final
         particles[0].Bind(transform);
         particles[segments].Bind(endPoint);
-        
+
         CreateLineRenderer();
     }
 
@@ -80,7 +80,7 @@ public class ImprovedCableComponent : MonoBehaviour
     private void UpdateCableVisual()
     {
         if (lineRenderer == null || particles == null) return;
-        
+
         for (int i = 0; i <= segments; i++)
         {
             lineRenderer.SetPosition(i, particles[i].Position);
@@ -90,7 +90,7 @@ public class ImprovedCableComponent : MonoBehaviour
     private void UpdateCablePhysics()
     {
         if (particles == null) return;
-        
+
         // Aplicar gravedad con Verlet Integration
         Vector3 gravity = Time.fixedDeltaTime * Time.fixedDeltaTime * Physics.gravity;
         foreach (ImprovedCableParticle particle in particles)
@@ -101,18 +101,18 @@ public class ImprovedCableComponent : MonoBehaviour
 
     private void SolveConstraints()
     {
-        // MEJORA: MÃºltiples iteraciones del solver
+        // MEJORA: Múltiples iteraciones del solver
         for (int iteration = 0; iteration < solverIterations; iteration++)
         {
             SolveDistanceConstraints();
-            SolveStiffnessConstraint();  // MEJORA: RestricciÃ³n de rigidez
+            SolveStiffnessConstraint();  // MEJORA: Restricción de rigidez
         }
     }
 
     private void SolveDistanceConstraints()
     {
         float segmentLength = cableLength / segments;
-        
+
         for (int i = 0; i < segments; i++)
         {
             ResolveDistanceConstraint(particles[i], particles[i + 1], segmentLength);
@@ -123,12 +123,12 @@ public class ImprovedCableComponent : MonoBehaviour
     {
         Vector3 delta = b.Position - a.Position;
         float currentDistance = delta.magnitude;
-        
+
         if (currentDistance == 0) return;
-        
+
         float errorFactor = (currentDistance - targetDistance) / currentDistance;
-        
-        // Solo mover partÃ­culas libres
+
+        // Solo mover partículas libres
         if (a.IsFree() && b.IsFree())
         {
             a.Position += errorFactor * 0.5f * delta;
@@ -145,19 +145,19 @@ public class ImprovedCableComponent : MonoBehaviour
     }
 
     /// <summary>
-    /// MEJORA: RestricciÃ³n de rigidez - Evita que el cable se estire demasiado
+    /// MEJORA: Restricción de rigidez - Evita que el cable se estire demasiado
     /// </summary>
     private void SolveStiffnessConstraint()
     {
         float currentDistance = (particles[0].Position - particles[segments].Position).magnitude;
-        
-        // Si el cable se estirÃ³ mÃ¡s de lo permitido
+
+        // Si el cable se estiró más de lo permitido
         if (currentDistance > cableLength)
         {
             float stretchFactor = cableLength / currentDistance;
             Vector3 center = (particles[0].Position + particles[segments].Position) * 0.5f;
-            
-            // Acercar todas las partÃ­culas hacia el centro proporcionalmente
+
+            // Acercar todas las partículas hacia el centro proporcionalmente
             for (int i = 1; i < segments; i++) // No mover los extremos
             {
                 if (particles[i].IsFree())
@@ -169,4 +169,3 @@ public class ImprovedCableComponent : MonoBehaviour
         }
     }
 }
-

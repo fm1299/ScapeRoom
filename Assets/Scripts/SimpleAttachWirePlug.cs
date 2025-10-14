@@ -3,27 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// VersiÃ³n simplificada para conectar cables - Solo maneja la conexiÃ³n bÃ¡sica
+/// Versión simplificada para conectar cables - Solo maneja la conexión básica
 /// </summary>
 public class SimpleAttachWirePlug : MonoBehaviour
 {
-    [Header("ConfiguraciÃ³n")]
+    [Header("Configuración")]
     [SerializeField] private SimpleWiresRiddleController controller;
-    [SerializeField] private int outletId; // ID Ãºnico del socket (0-4)
-    
+    [SerializeField] private int outletId; // ID único del socket (0-4)
+
     [Header("Posiciones")]
     [SerializeField] private Vector3 pluggedPosition;
     [SerializeField] private Quaternion pluggedRotation;
     [SerializeField] private Vector3 initialPosition;
     [SerializeField] private Quaternion initialRotation;
-    
+
     [Header("Audio")]
     [SerializeField] private AudioClip plugSound;
-    
+
     private GameObject connectedPlug;
     private AudioSource audioSource;
     private bool isPlugged = false;
-    
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -36,7 +36,7 @@ public class SimpleAttachWirePlug : MonoBehaviour
     /// </summary>
     void OnTriggerEnter(Collider other)
     {
-        // Solo aceptar objetos con tag "Plug" que no estÃ©n ya conectados
+        // Solo aceptar objetos con tag "Plug" que no estén ya conectados
         if (!isPlugged && other.gameObject.CompareTag("Plug"))
         {
             ConnectWire(other.gameObject);
@@ -51,7 +51,7 @@ public class SimpleAttachWirePlug : MonoBehaviour
         isPlugged = true;
         connectedPlug = wire;
 
-        // Liberar el cable de la mano VR si estÃ¡ siendo agarrado
+        // Liberar el cable de la mano VR si está siendo agarrado
         OVRGrabbable grabbable = wire.GetComponent<OVRGrabbable>();
         if (grabbable != null && grabbable.isGrabbed)
         {
@@ -59,7 +59,7 @@ public class SimpleAttachWirePlug : MonoBehaviour
             grabbable.enabled = false; // Deshabilitar agarre temporalmente
         }
 
-        // Hacer el cable no fÃ­sico para que se quede en posiciÃ³n
+        // Hacer el cable no físico para que se quede en posición
         Rigidbody rb = wire.GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -73,7 +73,7 @@ public class SimpleAttachWirePlug : MonoBehaviour
             col.enabled = false;
         }
 
-        // Mover el cable a la posiciÃ³n de conexiÃ³n
+        // Mover el cable a la posición de conexión
         StartCoroutine(MoveToPosition(wire, pluggedPosition, pluggedRotation));
 
         // Reproducir sonido
@@ -90,7 +90,7 @@ public class SimpleAttachWirePlug : MonoBehaviour
     }
 
     /// <summary>
-    /// Mueve el cable suavemente a la posiciÃ³n de conexiÃ³n
+    /// Mueve el cable suavemente a la posición de conexión
     /// </summary>
     private IEnumerator MoveToPosition(GameObject wire, Vector3 targetPos, Quaternion targetRot)
     {
@@ -103,14 +103,14 @@ public class SimpleAttachWirePlug : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             float t = elapsed / duration;
-            
+
             wire.transform.position = Vector3.Lerp(startPos, targetPos, t);
             wire.transform.rotation = Quaternion.Lerp(startRot, targetRot, t);
-            
+
             yield return null;
         }
 
-        // Asegurar posiciÃ³n exacta
+        // Asegurar posición exacta
         wire.transform.position = targetPos;
         wire.transform.rotation = targetRot;
     }
@@ -141,7 +141,7 @@ public class SimpleAttachWirePlug : MonoBehaviour
             col.enabled = true;
         }
 
-        // Mover de vuelta a posiciÃ³n inicial
+        // Mover de vuelta a posición inicial
         StartCoroutine(MoveToPosition(connectedPlug, initialPosition, initialRotation));
 
         // Reproducir sonido
