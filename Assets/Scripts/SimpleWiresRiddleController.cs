@@ -13,11 +13,6 @@ public class SimpleWiresRiddleController : MonoBehaviour
     [SerializeField] private SimpleAttachWirePlug[] socketArr;  // Los 5 sockets
     [SerializeField] private AudioClip wrongSound;        // Sonido de error
 
-    [Header("Sistema de WIN")]
-    [SerializeField] private GameObject winPanel;         // Panel que aparece al ganar
-    [SerializeField] private Text winText;                // Texto de WIN
-    [SerializeField] private AudioClip winSound;          // Sonido de victoria
-
     private GameObject[] outletArr;                       // Cables actualmente conectados
     private int correctlyPluggedCounter = 0;              // Contador de cables correctos
     private bool puzzleCompleted = false;                 // Evita múltiples victorias
@@ -25,10 +20,6 @@ public class SimpleWiresRiddleController : MonoBehaviour
     void Start()
     {
         outletArr = new GameObject[5];
-
-        // Ocultar panel de victoria al inicio
-        if (winPanel != null)
-            winPanel.SetActive(false);
     }
 
     /// <summary>
@@ -101,10 +92,6 @@ public class SimpleWiresRiddleController : MonoBehaviour
 
         // Mostrar mensaje de victoria
         ShowWinMessage();
-
-        // Reproducir sonido de victoria
-        if (winSound != null)
-            AudioSource.PlayClipAtPoint(winSound, transform.position);
     }
 
     /// <summary>
@@ -112,18 +99,8 @@ public class SimpleWiresRiddleController : MonoBehaviour
     /// </summary>
     private void ShowWinMessage()
     {
-        if (winPanel != null)
-        {
-            winPanel.SetActive(true);
-
-            if (winText != null)
-            {
-                winText.text = "¡FELICIDADES!\n¡PUZZLE COMPLETADO!\n¡GANASTE!";
-            }
-        }
-
         // También mostrar en consola
-        Debug.Log("¡FELICIDADES! ¡PUZZLE COMPLETADO! ¡GANASTE!");
+        Debug.LogError("¡FELICIDADES! ¡PUZZLE COMPLETADO! ¡GANASTE!");
     }
 
     /// <summary>
@@ -141,10 +118,6 @@ public class SimpleWiresRiddleController : MonoBehaviour
             if (socket != null)
                 socket.detach();
         }
-
-        // Ocultar panel de victoria
-        if (winPanel != null)
-            winPanel.SetActive(false);
 
         Debug.Log("Puzzle reseteado!");
     }
