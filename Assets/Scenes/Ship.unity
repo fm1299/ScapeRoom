@@ -527,9 +527,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1298789455}
     m_Modifications:
+    - target: {fileID: 823087063919201666, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_Name
-      value: SingleMonitorFrame (2)
+      value: SingleMonitorFrame 4
       objectReference: {fileID: 0}
     - target: {fileID: 5711369667635610501, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_LocalScale.x
@@ -2454,7 +2458,7 @@ GameObject:
   - component: {fileID: 209030949}
   - component: {fileID: 209030950}
   m_Layer: 0
-  m_Name: Cable_end
+  m_Name: Cable_end 3
   m_TagString: Plug
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2685,11 +2689,12 @@ MonoBehaviour:
   - {fileID: 377418998}
   socketArr:
   - {fileID: 1770336277}
-  - {fileID: 1770408314}
-  - {fileID: 968706834}
-  - {fileID: 1506150226}
   - {fileID: 872010588}
+  - {fileID: 1506150226}
+  - {fileID: 968706834}
+  - {fileID: 1770408314}
   wrongSound: {fileID: 0}
+  buttonController: {fileID: 1439759569}
 --- !u!1 &215415525
 GameObject:
   m_ObjectHideFlags: 0
@@ -4519,7 +4524,7 @@ GameObject:
   - component: {fileID: 377419003}
   - component: {fileID: 377419004}
   m_Layer: 0
-  m_Name: Cable_end
+  m_Name: Cable_end 5
   m_TagString: Plug
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5195,9 +5200,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1298789455}
     m_Modifications:
+    - target: {fileID: 823087063919201666, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_Name
-      value: SingleMonitorFrame (3)
+      value: SingleMonitorFrame 3
       objectReference: {fileID: 0}
     - target: {fileID: 5711369667635610501, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_LocalScale.x
@@ -6943,7 +6952,7 @@ GameObject:
   - component: {fileID: 554115681}
   - component: {fileID: 554115682}
   m_Layer: 0
-  m_Name: Cable_end
+  m_Name: Cable_end 1
   m_TagString: Plug
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7050,9 +7059,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 554115676}
   serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_Mass: 0.1
+  m_LinearDamping: 1
+  m_AngularDamping: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -11136,9 +11145,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1298789455}
     m_Modifications:
+    - target: {fileID: 823087063919201666, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_Name
-      value: SingleMonitorFrame (4)
+      value: SingleMonitorFrame 2
       objectReference: {fileID: 0}
     - target: {fileID: 5711369667635610501, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_LocalScale.x
@@ -11218,7 +11231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleAttachWirePlug
   controller: {fileID: 214999685}
-  outletId: 4
+  outletId: 1
   pluggedPosition: {x: 0, y: -1.3, z: -0.71}
   pluggedRotation: {x: 0, y: 0, z: 0, w: 0}
   initialPosition: {x: 0, y: -1.17, z: -0.223}
@@ -12086,7 +12099,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleAttachWirePlug
   controller: {fileID: 214999685}
-  outletId: 2
+  outletId: 3
   pluggedPosition: {x: 0, y: -1.3, z: -0.71}
   pluggedRotation: {x: 0, y: 0, z: 0, w: 0}
   initialPosition: {x: 0, y: -1.17, z: -0.223}
@@ -15832,10 +15845,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1770336273}
-  - {fileID: 1770408310}
-  - {fileID: 41576257}
-  - {fileID: 438578578}
   - {fileID: 872010584}
+  - {fileID: 438578578}
+  - {fileID: 41576257}
+  - {fileID: 1770408310}
   - {fileID: 803972063}
   - {fileID: 1346765322}
   - {fileID: 1141990976}
@@ -17625,6 +17638,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   animator: {fileID: 501566723}
   boolName: Open
+  isEnabled: 0
+  buttonLight: {fileID: 0}
 --- !u!114 &1439759570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18625,7 +18640,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleAttachWirePlug
   controller: {fileID: 214999685}
-  outletId: 3
+  outletId: 2
   pluggedPosition: {x: 0, y: -1.3, z: -0.71}
   pluggedRotation: {x: 0, y: 0, z: 0, w: 0}
   initialPosition: {x: 0, y: -1.17, z: -0.223}
@@ -19088,7 +19103,7 @@ GameObject:
   - component: {fileID: 1533535295}
   - component: {fileID: 1533535296}
   m_Layer: 0
-  m_Name: Cable_end
+  m_Name: Cable_end 2
   m_TagString: Plug
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22261,9 +22276,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1298789455}
     m_Modifications:
+    - target: {fileID: 823087063919201666, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_Name
-      value: SingleMonitorFrame
+      value: SingleMonitorFrame 1
       objectReference: {fileID: 0}
     - target: {fileID: 5711369667635610501, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_LocalScale.x
@@ -22357,9 +22376,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1298789455}
     m_Modifications:
+    - target: {fileID: 823087063919201666, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_Name
-      value: SingleMonitorFrame (1)
+      value: SingleMonitorFrame 5
       objectReference: {fileID: 0}
     - target: {fileID: 5711369667635610501, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_LocalScale.x
@@ -22439,7 +22462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleAttachWirePlug
   controller: {fileID: 214999685}
-  outletId: 1
+  outletId: 4
   pluggedPosition: {x: 0, y: -1.3, z: -0.71}
   pluggedRotation: {x: 0, y: 0, z: 0, w: 0}
   initialPosition: {x: 0, y: -1.17, z: -0.223}
@@ -26268,7 +26291,7 @@ GameObject:
   - component: {fileID: 2113427871}
   - component: {fileID: 2113427872}
   m_Layer: 0
-  m_Name: Cable_end
+  m_Name: Cable_end 4
   m_TagString: Plug
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
