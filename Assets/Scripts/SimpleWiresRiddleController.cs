@@ -4,18 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Controller simplificado del puzzle de cables - Solo muestra WIN cuando se completa
+/// Controller simplificado del puzzle de cables - Habilita el boton cuando se completa
 /// </summary>
 public class SimpleWiresRiddleController : MonoBehaviour
 {
-    [Header("Configuración del Puzzle")]
+    [Header("Configuracion del Puzzle")]
     [SerializeField] private GameObject[] correctPlugArr; // Los 5 cables en el orden correcto
     [SerializeField] private SimpleAttachWirePlug[] socketArr;  // Los 5 sockets
     [SerializeField] private AudioClip wrongSound;        // Sonido de error
 
+    [Header("Boton a Habilitar")]
+    [SerializeField] private ButtonPushOpenDoor buttonController; // Referencia al boton
+
     private GameObject[] outletArr;                       // Cables actualmente conectados
     private int correctlyPluggedCounter = 0;              // Contador de cables correctos
-    private bool puzzleCompleted = false;                 // Evita múltiples victorias
+    private bool puzzleCompleted = false;                 // Evita multiples victorias
 
     void Start()
     {
@@ -27,7 +30,7 @@ public class SimpleWiresRiddleController : MonoBehaviour
     /// </summary>
     public void OnWirePlugged(GameObject plug, int outletId)
     {
-        if (puzzleCompleted) return; // Si ya se completó, no hacer nada
+        if (puzzleCompleted) return; // Si ya se completï¿½, no hacer nada
 
         // Verificar si el cable es correcto para este socket
         if (correctPlugArr[outletId] == plug)
@@ -39,7 +42,7 @@ public class SimpleWiresRiddleController : MonoBehaviour
         // Guardar el cable conectado
         outletArr[outletId] = plug;
 
-        // Verificar si todos los cables están conectados
+        // Verificar si todos los cables estï¿½n conectados
         if (AllWiresPlugged())
         {
             CheckSolution();
@@ -47,7 +50,7 @@ public class SimpleWiresRiddleController : MonoBehaviour
     }
 
     /// <summary>
-    /// Verifica si todos los cables están conectados
+    /// Verifica si todos los cables estï¿½n conectados
     /// </summary>
     private bool AllWiresPlugged()
     {
@@ -60,23 +63,23 @@ public class SimpleWiresRiddleController : MonoBehaviour
     }
 
     /// <summary>
-    /// Verifica si la solución es correcta
+    /// Verifica si la soluciï¿½n es correcta
     /// </summary>
     private void CheckSolution()
     {
-        // Verificar si todos los cables están en la posición correcta
+        // Verificar si todos los cables estï¿½n en la posiciï¿½n correcta
         for (int i = 0; i < 5; i++)
         {
             if (outletArr[i] != correctPlugArr[i])
             {
-                // Solución incorrecta - reproducir sonido de error
+                // Soluciï¿½n incorrecta - reproducir sonido de error
                 AudioSource.PlayClipAtPoint(wrongSound, transform.position);
-                Debug.Log("Solución incorrecta! Algunos cables están mal conectados.");
+                Debug.Log("Soluciï¿½n incorrecta! Algunos cables estï¿½n mal conectados.");
                 return;
             }
         }
 
-        // ¡Solución correcta!
+        // ï¿½Soluciï¿½n correcta!
         PuzzleCompleted();
     }
 
@@ -88,7 +91,14 @@ public class SimpleWiresRiddleController : MonoBehaviour
         if (puzzleCompleted) return;
 
         puzzleCompleted = true;
-        Debug.Log("¡PUZZLE COMPLETADO! ¡GANASTE!");
+        Debug.Log("PUZZLE COMPLETADO! GANASTE!");
+
+        // Habilitar el boton para abrir la puerta
+        if (buttonController != null)
+        {
+            buttonController.EnableButton();
+            Debug.Log("Boton habilitado! Ahora puedes abrir la puerta.");
+        }
 
         // Mostrar mensaje de victoria
         ShowWinMessage();
@@ -99,8 +109,8 @@ public class SimpleWiresRiddleController : MonoBehaviour
     /// </summary>
     private void ShowWinMessage()
     {
-        // También mostrar en consola
-        Debug.LogError("¡FELICIDADES! ¡PUZZLE COMPLETADO! ¡GANASTE!");
+        // Tambien mostrar en consola
+        Debug.LogError("FELICIDADES! PUZZLE COMPLETADO! GANASTE!");
     }
 
     /// <summary>

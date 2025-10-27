@@ -529,7 +529,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_Name
-      value: SingleMonitorFrame (2)
+      value: SingleMonitorFrame 3
       objectReference: {fileID: 0}
     - target: {fileID: 5711369667635610501, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_LocalScale.x
@@ -590,6 +590,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       insertIndex: -1
       addedObject: {fileID: 968706834}
+    - targetCorrespondingSourceObject: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 968706835}
   m_SourcePrefab: {fileID: 100100000, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
 --- !u!4 &41576257 stripped
 Transform:
@@ -645,7 +648,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 377419003}
+  _pointableElement: {fileID: 0}
   _rigidbody: {fileID: 377419004}
   _grabSource: {fileID: 0}
   _useClosestPointAsGrabSource: 0
@@ -668,7 +671,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 377419003}
+  _pointableElement: {fileID: 0}
   _rigidbody: {fileID: 377419004}
   _physicsGrabbable: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
@@ -1754,7 +1757,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 2113427872}
+  _pointableElement: {fileID: 0}
   _rigidbody: {fileID: 2113427871}
   _grabSource: {fileID: 0}
   _useClosestPointAsGrabSource: 0
@@ -1777,7 +1780,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 2113427872}
+  _pointableElement: {fileID: 0}
   _rigidbody: {fileID: 2113427871}
   _physicsGrabbable: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
@@ -1913,7 +1916,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 1533535296}
+  _pointableElement: {fileID: 0}
   _rigidbody: {fileID: 1533535295}
   _grabSource: {fileID: 0}
   _useClosestPointAsGrabSource: 0
@@ -1936,7 +1939,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 1533535296}
+  _pointableElement: {fileID: 0}
   _rigidbody: {fileID: 1533535295}
   _physicsGrabbable: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
@@ -2454,7 +2457,7 @@ GameObject:
   - component: {fileID: 209030949}
   - component: {fileID: 209030950}
   m_Layer: 0
-  m_Name: Cable_end
+  m_Name: Cable_end 3
   m_TagString: Plug
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2561,9 +2564,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 209030944}
   serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_Mass: 0.1
+  m_LinearDamping: 1
+  m_AngularDamping: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -2577,9 +2580,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &209030950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2589,19 +2592,124 @@ MonoBehaviour:
   m_GameObject: {fileID: 209030944}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43f86b14a27b52f4f9298c33015b5c26, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Oculus.Interaction::Oculus.Interaction.Grabbable
-  _transferOnSecondSelection: 0
-  _addNewPointsToFront: 0
-  _forwardElement: {fileID: 0}
-  _oneGrabTransformer: {fileID: 0}
-  _twoGrabTransformer: {fileID: 0}
-  _targetTransform: {fileID: 209030945}
-  _maxGrabPoints: -1
-  _rigidbody: {fileID: 209030949}
-  _kinematicWhileSelected: 1
-  _throwWhenUnselected: 1
+  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable
+  m_InteractionManager: {fileID: 0}
+  m_Colliders: []
+  m_InteractionLayers:
+    m_Bits: 1
+  m_DistanceCalculationMode: 1
+  m_SelectMode: 0
+  m_FocusMode: 1
+  m_CustomReticle: {fileID: 0}
+  m_AllowGazeInteraction: 0
+  m_AllowGazeSelect: 0
+  m_OverrideGazeTimeToSelect: 0
+  m_GazeTimeToSelect: 0.5
+  m_OverrideTimeToAutoDeselectGaze: 0
+  m_TimeToAutoDeselectGaze: 3
+  m_AllowGazeAssistance: 0
+  m_FirstHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Activated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Deactivated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
+  m_StartingInteractionStrengthFilters: []
+  m_AttachTransform: {fileID: 0}
+  m_SecondaryAttachTransform: {fileID: 0}
+  m_UseDynamicAttach: 0
+  m_MatchAttachPosition: 1
+  m_MatchAttachRotation: 1
+  m_SnapToColliderVolume: 1
+  m_ReinitializeDynamicAttachEverySingleGrab: 1
+  m_AttachEaseInTime: 0.15
+  m_MovementType: 2
+  m_PredictedVisualsTransform: {fileID: 0}
+  m_VelocityDamping: 1
+  m_VelocityScale: 1
+  m_AngularVelocityDamping: 1
+  m_AngularVelocityScale: 1
+  m_TrackPosition: 1
+  m_SmoothPosition: 0
+  m_SmoothPositionAmount: 8
+  m_TightenPosition: 0.1
+  m_TrackRotation: 1
+  m_SmoothRotation: 0
+  m_SmoothRotationAmount: 8
+  m_TightenRotation: 0.1
+  m_TrackScale: 1
+  m_SmoothScale: 0
+  m_SmoothScaleAmount: 8
+  m_TightenScale: 0.1
+  m_ThrowOnDetach: 1
+  m_ThrowSmoothingDuration: 0.25
+  m_ThrowSmoothingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_ThrowVelocityScale: 1.5
+  m_ThrowAngularVelocityScale: 1
+  m_ForceGravityOnDetach: 0
+  m_RetainTransformParent: 1
+  m_StartingSingleGrabTransformers: []
+  m_StartingMultipleGrabTransformers: []
+  m_AddDefaultGrabTransformers: 1
+  m_FarAttachMode: 0
+  m_LimitLinearVelocity: 0
+  m_LimitAngularVelocity: 0
+  m_MaxLinearVelocityDelta: 10
+  m_MaxAngularVelocityDelta: 20
 --- !u!1 &214572741
 GameObject:
   m_ObjectHideFlags: 0
@@ -2685,11 +2793,12 @@ MonoBehaviour:
   - {fileID: 377418998}
   socketArr:
   - {fileID: 1770336277}
-  - {fileID: 1770408314}
-  - {fileID: 968706834}
-  - {fileID: 1506150226}
   - {fileID: 872010588}
+  - {fileID: 1506150226}
+  - {fileID: 968706834}
+  - {fileID: 1770408314}
   wrongSound: {fileID: 0}
+  buttonController: {fileID: 1439759569}
 --- !u!1 &215415525
 GameObject:
   m_ObjectHideFlags: 0
@@ -4516,10 +4625,10 @@ GameObject:
   - component: {fileID: 377419002}
   - component: {fileID: 377419001}
   - component: {fileID: 377419000}
-  - component: {fileID: 377419003}
   - component: {fileID: 377419004}
+  - component: {fileID: 377419005}
   m_Layer: 0
-  m_Name: Cable_end
+  m_Name: Cable_end 5
   m_TagString: Plug
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4618,28 +4727,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 377418998}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &377419003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 377418998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43f86b14a27b52f4f9298c33015b5c26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Oculus.Interaction::Oculus.Interaction.Grabbable
-  _transferOnSecondSelection: 0
-  _addNewPointsToFront: 0
-  _forwardElement: {fileID: 0}
-  _oneGrabTransformer: {fileID: 0}
-  _twoGrabTransformer: {fileID: 0}
-  _targetTransform: {fileID: 0}
-  _maxGrabPoints: -1
-  _rigidbody: {fileID: 377419004}
-  _kinematicWhileSelected: 1
-  _throwWhenUnselected: 1
 --- !u!54 &377419004
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4648,9 +4735,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 377418998}
   serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_Mass: 0.1
+  m_LinearDamping: 1
+  m_AngularDamping: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -4664,9 +4751,136 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
+--- !u!114 &377419005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377418998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable
+  m_InteractionManager: {fileID: 0}
+  m_Colliders: []
+  m_InteractionLayers:
+    m_Bits: 1
+  m_DistanceCalculationMode: 1
+  m_SelectMode: 0
+  m_FocusMode: 1
+  m_CustomReticle: {fileID: 0}
+  m_AllowGazeInteraction: 0
+  m_AllowGazeSelect: 0
+  m_OverrideGazeTimeToSelect: 0
+  m_GazeTimeToSelect: 0.5
+  m_OverrideTimeToAutoDeselectGaze: 0
+  m_TimeToAutoDeselectGaze: 3
+  m_AllowGazeAssistance: 0
+  m_FirstHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Activated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Deactivated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
+  m_StartingInteractionStrengthFilters: []
+  m_AttachTransform: {fileID: 0}
+  m_SecondaryAttachTransform: {fileID: 0}
+  m_UseDynamicAttach: 0
+  m_MatchAttachPosition: 1
+  m_MatchAttachRotation: 1
+  m_SnapToColliderVolume: 1
+  m_ReinitializeDynamicAttachEverySingleGrab: 1
+  m_AttachEaseInTime: 0.15
+  m_MovementType: 2
+  m_PredictedVisualsTransform: {fileID: 0}
+  m_VelocityDamping: 1
+  m_VelocityScale: 1
+  m_AngularVelocityDamping: 1
+  m_AngularVelocityScale: 1
+  m_TrackPosition: 1
+  m_SmoothPosition: 0
+  m_SmoothPositionAmount: 8
+  m_TightenPosition: 0.1
+  m_TrackRotation: 1
+  m_SmoothRotation: 0
+  m_SmoothRotationAmount: 8
+  m_TightenRotation: 0.1
+  m_TrackScale: 1
+  m_SmoothScale: 0
+  m_SmoothScaleAmount: 8
+  m_TightenScale: 0.1
+  m_ThrowOnDetach: 1
+  m_ThrowSmoothingDuration: 0.25
+  m_ThrowSmoothingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_ThrowVelocityScale: 1.5
+  m_ThrowAngularVelocityScale: 1
+  m_ForceGravityOnDetach: 0
+  m_RetainTransformParent: 1
+  m_StartingSingleGrabTransformers: []
+  m_StartingMultipleGrabTransformers: []
+  m_AddDefaultGrabTransformers: 1
+  m_FarAttachMode: 0
+  m_LimitLinearVelocity: 0
+  m_LimitAngularVelocity: 0
+  m_MaxLinearVelocityDelta: 10
+  m_MaxAngularVelocityDelta: 20
 --- !u!1 &381401420
 GameObject:
   m_ObjectHideFlags: 0
@@ -5197,7 +5411,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_Name
-      value: SingleMonitorFrame (3)
+      value: SingleMonitorFrame 2
       objectReference: {fileID: 0}
     - target: {fileID: 5711369667635610501, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_LocalScale.x
@@ -5258,6 +5472,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1506150226}
+    - targetCorrespondingSourceObject: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1506150227}
   m_SourcePrefab: {fileID: 100100000, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
 --- !u!4 &438578578 stripped
 Transform:
@@ -6943,7 +7160,7 @@ GameObject:
   - component: {fileID: 554115681}
   - component: {fileID: 554115682}
   m_Layer: 0
-  m_Name: Cable_end
+  m_Name: Cable_end 1
   m_TagString: Plug
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7050,9 +7267,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 554115676}
   serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_Mass: 0.1
+  m_LinearDamping: 1
+  m_AngularDamping: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -7066,9 +7283,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &554115682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7078,19 +7295,124 @@ MonoBehaviour:
   m_GameObject: {fileID: 554115676}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43f86b14a27b52f4f9298c33015b5c26, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Oculus.Interaction::Oculus.Interaction.Grabbable
-  _transferOnSecondSelection: 0
-  _addNewPointsToFront: 0
-  _forwardElement: {fileID: 0}
-  _oneGrabTransformer: {fileID: 0}
-  _twoGrabTransformer: {fileID: 0}
-  _targetTransform: {fileID: 554115677}
-  _maxGrabPoints: -1
-  _rigidbody: {fileID: 554115681}
-  _kinematicWhileSelected: 1
-  _throwWhenUnselected: 1
+  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable
+  m_InteractionManager: {fileID: 0}
+  m_Colliders: []
+  m_InteractionLayers:
+    m_Bits: 1
+  m_DistanceCalculationMode: 1
+  m_SelectMode: 0
+  m_FocusMode: 1
+  m_CustomReticle: {fileID: 0}
+  m_AllowGazeInteraction: 0
+  m_AllowGazeSelect: 0
+  m_OverrideGazeTimeToSelect: 0
+  m_GazeTimeToSelect: 0.5
+  m_OverrideTimeToAutoDeselectGaze: 0
+  m_TimeToAutoDeselectGaze: 3
+  m_AllowGazeAssistance: 0
+  m_FirstHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Activated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Deactivated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
+  m_StartingInteractionStrengthFilters: []
+  m_AttachTransform: {fileID: 0}
+  m_SecondaryAttachTransform: {fileID: 0}
+  m_UseDynamicAttach: 0
+  m_MatchAttachPosition: 1
+  m_MatchAttachRotation: 1
+  m_SnapToColliderVolume: 1
+  m_ReinitializeDynamicAttachEverySingleGrab: 1
+  m_AttachEaseInTime: 0.15
+  m_MovementType: 2
+  m_PredictedVisualsTransform: {fileID: 0}
+  m_VelocityDamping: 1
+  m_VelocityScale: 1
+  m_AngularVelocityDamping: 1
+  m_AngularVelocityScale: 1
+  m_TrackPosition: 1
+  m_SmoothPosition: 0
+  m_SmoothPositionAmount: 8
+  m_TightenPosition: 0.1
+  m_TrackRotation: 1
+  m_SmoothRotation: 0
+  m_SmoothRotationAmount: 8
+  m_TightenRotation: 0.1
+  m_TrackScale: 1
+  m_SmoothScale: 0
+  m_SmoothScaleAmount: 8
+  m_TightenScale: 0.1
+  m_ThrowOnDetach: 1
+  m_ThrowSmoothingDuration: 0.25
+  m_ThrowSmoothingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_ThrowVelocityScale: 1.5
+  m_ThrowAngularVelocityScale: 1
+  m_ForceGravityOnDetach: 0
+  m_RetainTransformParent: 1
+  m_StartingSingleGrabTransformers: []
+  m_StartingMultipleGrabTransformers: []
+  m_AddDefaultGrabTransformers: 1
+  m_FarAttachMode: 0
+  m_LimitLinearVelocity: 0
+  m_LimitAngularVelocity: 0
+  m_MaxLinearVelocityDelta: 10
+  m_MaxAngularVelocityDelta: 20
 --- !u!1 &555983184
 GameObject:
   m_ObjectHideFlags: 0
@@ -8225,7 +8547,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 554115682}
+  _pointableElement: {fileID: 0}
   _rigidbody: {fileID: 554115681}
   _grabSource: {fileID: 0}
   _useClosestPointAsGrabSource: 0
@@ -8248,7 +8570,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 554115682}
+  _pointableElement: {fileID: 0}
   _rigidbody: {fileID: 554115681}
   _physicsGrabbable: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
@@ -11138,7 +11460,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_Name
-      value: SingleMonitorFrame (4)
+      value: SingleMonitorFrame 1
       objectReference: {fileID: 0}
     - target: {fileID: 5711369667635610501, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_LocalScale.x
@@ -11199,6 +11521,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       insertIndex: -1
       addedObject: {fileID: 872010588}
+    - targetCorrespondingSourceObject: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 872010589}
   m_SourcePrefab: {fileID: 100100000, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
 --- !u!4 &872010584 stripped
 Transform:
@@ -11218,12 +11543,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleAttachWirePlug
   controller: {fileID: 214999685}
-  outletId: 4
-  pluggedPosition: {x: 0, y: -1.3, z: -0.71}
-  pluggedRotation: {x: 0, y: 0, z: 0, w: 0}
-  initialPosition: {x: 0, y: -1.17, z: -0.223}
-  initialRotation: {x: 0, y: 0, z: 0, w: 0}
+  outletId: 1
+  magneticRange: 0.15
+  snapSpeed: 5
   plugSound: {fileID: 0}
+--- !u!135 &872010589
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362734010}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.05
+  m_Center: {x: -0.0003334619, y: -0.00017668678, z: -0.006132571}
 --- !u!1 &872323097
 GameObject:
   m_ObjectHideFlags: 0
@@ -12086,12 +12430,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleAttachWirePlug
   controller: {fileID: 214999685}
-  outletId: 2
-  pluggedPosition: {x: 0, y: -1.3, z: -0.71}
-  pluggedRotation: {x: 0, y: 0, z: 0, w: 0}
-  initialPosition: {x: 0, y: -1.17, z: -0.223}
-  initialRotation: {x: 0, y: 0, z: 0, w: 0}
+  outletId: 3
+  magneticRange: 0.15
+  snapSpeed: 5
   plugSound: {fileID: 0}
+--- !u!135 &968706835
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968706830}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.05
+  m_Center: {x: -0.00033370033, y: -0.00017668678, z: -0.006132571}
 --- !u!1 &972192520
 GameObject:
   m_ObjectHideFlags: 0
@@ -13063,6 +13426,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1439759570}
   m_SourcePrefab: {fileID: 100100000, guid: d2d6934a666a18d46b8b7a3864dc9f63, type: 3}
+--- !u!23 &1061591186 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7516989854852174097, guid: d2d6934a666a18d46b8b7a3864dc9f63, type: 3}
+  m_PrefabInstance: {fileID: 1061591185}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1073912519
 GameObject:
   m_ObjectHideFlags: 0
@@ -15832,10 +16200,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1770336273}
-  - {fileID: 1770408310}
-  - {fileID: 41576257}
-  - {fileID: 438578578}
   - {fileID: 872010584}
+  - {fileID: 438578578}
+  - {fileID: 41576257}
+  - {fileID: 1770408310}
   - {fileID: 803972063}
   - {fileID: 1346765322}
   - {fileID: 1141990976}
@@ -17625,6 +17993,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   animator: {fileID: 501566723}
   boolName: Open
+  isEnabled: 0
+  buttonRenderer: {fileID: 1061591186}
+  disabledColor: {r: 1, g: 0, b: 0, a: 1}
+  enabledColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &1439759570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18625,12 +18997,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleAttachWirePlug
   controller: {fileID: 214999685}
-  outletId: 3
-  pluggedPosition: {x: 0, y: -1.3, z: -0.71}
-  pluggedRotation: {x: 0, y: 0, z: 0, w: 0}
-  initialPosition: {x: 0, y: -1.17, z: -0.223}
-  initialRotation: {x: 0, y: 0, z: 0, w: 0}
+  outletId: 2
+  magneticRange: 0.15
+  snapSpeed: 5
   plugSound: {fileID: 0}
+--- !u!135 &1506150227
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506150222}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.05
+  m_Center: {x: -0.0003334619, y: -0.00017667188, z: -0.006132571}
 --- !u!1 &1508581972
 GameObject:
   m_ObjectHideFlags: 0
@@ -19088,7 +19479,7 @@ GameObject:
   - component: {fileID: 1533535295}
   - component: {fileID: 1533535296}
   m_Layer: 0
-  m_Name: Cable_end
+  m_Name: Cable_end 2
   m_TagString: Plug
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19195,9 +19586,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1533535290}
   serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_Mass: 0.1
+  m_LinearDamping: 1
+  m_AngularDamping: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -19211,9 +19602,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &1533535296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19223,19 +19614,124 @@ MonoBehaviour:
   m_GameObject: {fileID: 1533535290}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43f86b14a27b52f4f9298c33015b5c26, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Oculus.Interaction::Oculus.Interaction.Grabbable
-  _transferOnSecondSelection: 0
-  _addNewPointsToFront: 0
-  _forwardElement: {fileID: 0}
-  _oneGrabTransformer: {fileID: 0}
-  _twoGrabTransformer: {fileID: 0}
-  _targetTransform: {fileID: 1533535291}
-  _maxGrabPoints: -1
-  _rigidbody: {fileID: 1533535295}
-  _kinematicWhileSelected: 1
-  _throwWhenUnselected: 1
+  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable
+  m_InteractionManager: {fileID: 0}
+  m_Colliders: []
+  m_InteractionLayers:
+    m_Bits: 1
+  m_DistanceCalculationMode: 1
+  m_SelectMode: 0
+  m_FocusMode: 1
+  m_CustomReticle: {fileID: 0}
+  m_AllowGazeInteraction: 0
+  m_AllowGazeSelect: 0
+  m_OverrideGazeTimeToSelect: 0
+  m_GazeTimeToSelect: 0.5
+  m_OverrideTimeToAutoDeselectGaze: 0
+  m_TimeToAutoDeselectGaze: 3
+  m_AllowGazeAssistance: 0
+  m_FirstHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Activated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Deactivated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
+  m_StartingInteractionStrengthFilters: []
+  m_AttachTransform: {fileID: 0}
+  m_SecondaryAttachTransform: {fileID: 0}
+  m_UseDynamicAttach: 0
+  m_MatchAttachPosition: 1
+  m_MatchAttachRotation: 1
+  m_SnapToColliderVolume: 1
+  m_ReinitializeDynamicAttachEverySingleGrab: 1
+  m_AttachEaseInTime: 0.15
+  m_MovementType: 2
+  m_PredictedVisualsTransform: {fileID: 0}
+  m_VelocityDamping: 1
+  m_VelocityScale: 1
+  m_AngularVelocityDamping: 1
+  m_AngularVelocityScale: 1
+  m_TrackPosition: 1
+  m_SmoothPosition: 0
+  m_SmoothPositionAmount: 8
+  m_TightenPosition: 0.1
+  m_TrackRotation: 1
+  m_SmoothRotation: 0
+  m_SmoothRotationAmount: 8
+  m_TightenRotation: 0.1
+  m_TrackScale: 1
+  m_SmoothScale: 0
+  m_SmoothScaleAmount: 8
+  m_TightenScale: 0.1
+  m_ThrowOnDetach: 1
+  m_ThrowSmoothingDuration: 0.25
+  m_ThrowSmoothingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_ThrowVelocityScale: 1.5
+  m_ThrowAngularVelocityScale: 1
+  m_ForceGravityOnDetach: 0
+  m_RetainTransformParent: 1
+  m_StartingSingleGrabTransformers: []
+  m_StartingMultipleGrabTransformers: []
+  m_AddDefaultGrabTransformers: 1
+  m_FarAttachMode: 0
+  m_LimitLinearVelocity: 0
+  m_LimitAngularVelocity: 0
+  m_MaxLinearVelocityDelta: 10
+  m_MaxAngularVelocityDelta: 20
 --- !u!1 &1554214521
 GameObject:
   m_ObjectHideFlags: 0
@@ -22261,9 +22757,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1298789455}
     m_Modifications:
+    - target: {fileID: 823087063919201666, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_Name
-      value: SingleMonitorFrame
+      value: SingleMonitorFrame 0
       objectReference: {fileID: 0}
     - target: {fileID: 5711369667635610501, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_LocalScale.x
@@ -22324,6 +22824,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1770336277}
+    - targetCorrespondingSourceObject: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1770336278}
   m_SourcePrefab: {fileID: 100100000, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
 --- !u!4 &1770336273 stripped
 Transform:
@@ -22344,11 +22847,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SimpleAttachWirePlug
   controller: {fileID: 214999685}
   outletId: 0
-  pluggedPosition: {x: 0, y: -1.3, z: -0.71}
-  pluggedRotation: {x: 0, y: 0, z: 0, w: 0}
-  initialPosition: {x: 0, y: -1.17, z: -0.223}
-  initialRotation: {x: 0, y: 0, z: 0, w: 0}
+  magneticRange: 0.15
+  snapSpeed: 5
   plugSound: {fileID: 0}
+--- !u!135 &1770336278
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714434080}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.05
+  m_Center: {x: -0.0003334619, y: -0.00017668678, z: -0.006132571}
 --- !u!1001 &1770408309
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22359,7 +22881,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_Name
-      value: SingleMonitorFrame (1)
+      value: SingleMonitorFrame 4
       objectReference: {fileID: 0}
     - target: {fileID: 5711369667635610501, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       propertyPath: m_LocalScale.x
@@ -22420,6 +22942,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1770408314}
+    - targetCorrespondingSourceObject: {fileID: 4902463822476663103, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1770408315}
   m_SourcePrefab: {fileID: 100100000, guid: 331926bd2a5c79045bd04aa4556cd328, type: 3}
 --- !u!4 &1770408310 stripped
 Transform:
@@ -22439,12 +22964,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleAttachWirePlug
   controller: {fileID: 214999685}
-  outletId: 1
-  pluggedPosition: {x: 0, y: -1.3, z: -0.71}
-  pluggedRotation: {x: 0, y: 0, z: 0, w: 0}
-  initialPosition: {x: 0, y: -1.17, z: -0.223}
-  initialRotation: {x: 0, y: 0, z: 0, w: 0}
+  outletId: 4
+  magneticRange: 0.15
+  snapSpeed: 5
   plugSound: {fileID: 0}
+--- !u!135 &1770408315
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71406115}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.05
+  m_Center: {x: -0.0003334619, y: -0.00017668678, z: -0.006132571}
 --- !u!1 &1782808315
 GameObject:
   m_ObjectHideFlags: 0
@@ -26050,7 +26594,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 209030950}
+  _pointableElement: {fileID: 0}
   _rigidbody: {fileID: 209030949}
   _grabSource: {fileID: 0}
   _useClosestPointAsGrabSource: 0
@@ -26073,7 +26617,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 209030950}
+  _pointableElement: {fileID: 0}
   _rigidbody: {fileID: 209030949}
   _physicsGrabbable: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
@@ -26266,9 +26810,9 @@ GameObject:
   - component: {fileID: 2113427874}
   - component: {fileID: 2113427873}
   - component: {fileID: 2113427871}
-  - component: {fileID: 2113427872}
+  - component: {fileID: 2113427876}
   m_Layer: 0
-  m_Name: Cable_end
+  m_Name: Cable_end 4
   m_TagString: Plug
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26298,9 +26842,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2113427869}
   serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_Mass: 0.1
+  m_LinearDamping: 1
+  m_AngularDamping: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -26314,31 +26858,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &2113427872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113427869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43f86b14a27b52f4f9298c33015b5c26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Oculus.Interaction::Oculus.Interaction.Grabbable
-  _transferOnSecondSelection: 0
-  _addNewPointsToFront: 0
-  _forwardElement: {fileID: 0}
-  _oneGrabTransformer: {fileID: 0}
-  _twoGrabTransformer: {fileID: 0}
-  _targetTransform: {fileID: 2113427870}
-  _maxGrabPoints: -1
-  _rigidbody: {fileID: 2113427871}
-  _kinematicWhileSelected: 1
-  _throwWhenUnselected: 1
+  m_CollisionDetection: 2
 --- !u!65 &2113427873
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26416,6 +26938,133 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2113427869}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2113427876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113427869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable
+  m_InteractionManager: {fileID: 0}
+  m_Colliders: []
+  m_InteractionLayers:
+    m_Bits: 1
+  m_DistanceCalculationMode: 1
+  m_SelectMode: 0
+  m_FocusMode: 1
+  m_CustomReticle: {fileID: 0}
+  m_AllowGazeInteraction: 0
+  m_AllowGazeSelect: 0
+  m_OverrideGazeTimeToSelect: 0
+  m_GazeTimeToSelect: 0.5
+  m_OverrideTimeToAutoDeselectGaze: 0
+  m_TimeToAutoDeselectGaze: 3
+  m_AllowGazeAssistance: 0
+  m_FirstHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Activated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Deactivated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
+  m_StartingInteractionStrengthFilters: []
+  m_AttachTransform: {fileID: 0}
+  m_SecondaryAttachTransform: {fileID: 0}
+  m_UseDynamicAttach: 0
+  m_MatchAttachPosition: 1
+  m_MatchAttachRotation: 1
+  m_SnapToColliderVolume: 1
+  m_ReinitializeDynamicAttachEverySingleGrab: 1
+  m_AttachEaseInTime: 0.15
+  m_MovementType: 2
+  m_PredictedVisualsTransform: {fileID: 0}
+  m_VelocityDamping: 1
+  m_VelocityScale: 1
+  m_AngularVelocityDamping: 1
+  m_AngularVelocityScale: 1
+  m_TrackPosition: 1
+  m_SmoothPosition: 0
+  m_SmoothPositionAmount: 8
+  m_TightenPosition: 0.1
+  m_TrackRotation: 1
+  m_SmoothRotation: 0
+  m_SmoothRotationAmount: 8
+  m_TightenRotation: 0.1
+  m_TrackScale: 1
+  m_SmoothScale: 0
+  m_SmoothScaleAmount: 8
+  m_TightenScale: 0.1
+  m_ThrowOnDetach: 1
+  m_ThrowSmoothingDuration: 0.25
+  m_ThrowSmoothingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_ThrowVelocityScale: 1.5
+  m_ThrowAngularVelocityScale: 1
+  m_ForceGravityOnDetach: 0
+  m_RetainTransformParent: 1
+  m_StartingSingleGrabTransformers: []
+  m_StartingMultipleGrabTransformers: []
+  m_AddDefaultGrabTransformers: 1
+  m_FarAttachMode: 0
+  m_LimitLinearVelocity: 0
+  m_LimitAngularVelocity: 0
+  m_MaxLinearVelocityDelta: 10
+  m_MaxAngularVelocityDelta: 20
 --- !u!1 &2129714711
 GameObject:
   m_ObjectHideFlags: 0
