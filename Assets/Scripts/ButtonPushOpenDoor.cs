@@ -14,8 +14,12 @@ public class ButtonPushOpenDoor : MonoBehaviour
     [SerializeField] private Color disabledColor = Color.red; // Color cuando esta deshabilitado
     [SerializeField] private Color enabledColor = Color.green; // Color cuando esta habilitado
 
+    [Header("Feedback Visual")]
+    [SerializeField] private float pulseSpeed = 2f; // Velocidad de parpadeo cuando esta deshabilitado
+
     private XRSimpleInteractable interactable;
     private Material buttonMaterial;
+    private bool isPulsing = false;
 
     void Start()
     {
@@ -24,17 +28,31 @@ public class ButtonPushOpenDoor : MonoBehaviour
         
         if (interactable != null)
         {
+            // IMPORTANTE: El listener siempre verifica si esta habilitado antes de actuar
             interactable.selectEntered.AddListener((x) => TryOpenDoor());
         }
 
         // Obtener o crear material para el boton
         if (buttonRenderer != null)
         {
-            buttonMaterial = buttonRenderer.material;
+            // Crear una instancia del material para no afectar otros objetos
+            buttonMaterial = new Material(buttonRenderer.material);
+            buttonRenderer.material = buttonMaterial;
         }
 
         // Configurar estado inicial (deshabilitado)
-        SetButtonState(isEnabled);
+        UpdateButtonVisual();
+    }
+
+    void Update()
+    {
+        // Si esta deshabilitado, hacer pulsar el color rojo como advertencia
+        if (!isEnabled && isPulsing && buttonMaterial != null)
+        {
+            float pulse = Mathf.PingPong(Time.time * pulseSpeed, 1f);
+            Color currentColor = Color.Lerp(disabledColor * 0.5f, disabledColor, pulse);
+            buttonMaterial.color = currentColor;
+        }
     }
 
     /// <summary>
@@ -44,10 +62,13 @@ public class ButtonPushOpenDoor : MonoBehaviour
     {
         if (!isEnabled)
         {
-            Debug.LogWarning("El boton esta deshabilitado! Completa el puzzle de cables primero.");
+            Debug.LogWarning("¡BOTON BLOQUEADO! Completa el puzzle de cables primero.");
+            // Activar pulsacion temporal para feedback visual
+            StartCoroutine(PulseDisabledFeedback());
             return;
         }
 
+        // Si esta habilitado, abrir/cerrar la puerta
         OpenDoor();
     }
 
@@ -56,7 +77,13 @@ public class ButtonPushOpenDoor : MonoBehaviour
     /// </summary>
     private void OpenDoor()
     {
-        Debug.Log("Boton presionado - Abriendo/Cerrando puerta");
+        if (animator == null)
+        {
+            Debug.LogError("¡ERROR! No hay Animator asignado al boton.");
+            return;
+        }
+
+        Debug.Log("Boton VERDE presionado - Abriendo/Cerrando puerta");
         bool isOpen = animator.GetBool(boolName);
         animator.SetBool(boolName, !isOpen);
     }
@@ -67,8 +94,9 @@ public class ButtonPushOpenDoor : MonoBehaviour
     public void EnableButton()
     {
         isEnabled = true;
-        SetButtonState(true);
-        Debug.Log("Boton HABILITADO - Ahora puedes presionarlo!");
+        isPulsing = false;
+        UpdateButtonVisual();
+        Debug.Log("✓ BOTON HABILITADO - ¡Ahora puedes presionarlo para abrir la puerta!");
     }
 
     /// <summary>
@@ -77,36 +105,51 @@ public class ButtonPushOpenDoor : MonoBehaviour
     public void DisableButton()
     {
         isEnabled = false;
-        SetButtonState(false);
-        Debug.Log("Boton DESHABILITADO");
+        UpdateButtonVisual();
+        Debug.Log("✗ BOTON DESHABILITADO - Completa el puzzle primero");
     }
 
     /// <summary>
-    /// Configura el estado visual del boton
+    /// Actualiza el estado visual del boton
     /// </summary>
-    private void SetButtonState(bool enabled)
+    private void UpdateButtonVisual()
     {
-        if (buttonMaterial != null)
-        {
-            // Cambiar color segun el estado
-            buttonMaterial.color = enabled ? enabledColor : disabledColor;
-            
-            // Opcional: Cambiar emision para hacerlo mas visible
-            if (enabled)
-            {
-                buttonMaterial.EnableKeyword("_EMISSION");
-                buttonMaterial.SetColor("_EmissionColor", enabledColor * 0.5f);
-            }
-            else
-            {
-                buttonMaterial.DisableKeyword("_EMISSION");
-            }
-        }
+        if (buttonMaterial == null) return;
 
-        // Opcional: Cambiar la interactividad visual del XRSimpleInteractable
-        if (interactable != null)
+        if (isEnabled)
         {
-            interactable.enabled = enabled; // Deshabilitar interaccion completamente si esta deshabilitado
+            // Boton HABILITADO - Verde brillante
+            buttonMaterial.color = enabledColor;
+            
+            // Activar emision para hacerlo brillar
+            buttonMaterial.EnableKeyword("_EMISSION");
+            buttonMaterial.SetColor("_EmissionColor", enabledColor * 0.8f);
+            
+            isPulsing = false;
+        }
+        else
+        {
+            // Boton DESHABILITADO - Rojo apagado
+            buttonMaterial.color = disabledColor * 0.7f;
+            
+            // Desactivar emision
+            buttonMaterial.DisableKeyword("_EMISSION");
+            buttonMaterial.SetColor("_EmissionColor", Color.black);
+        }
+    }
+
+    /// <summary>
+    /// Feedback visual cuando intentan presionar el boton deshabilitado
+    /// </summary>
+    private System.Collections.IEnumerator PulseDisabledFeedback()
+    {
+        isPulsing = true;
+        yield return new WaitForSeconds(1f);
+        
+        if (!isEnabled) // Si sigue deshabilitado, volver al color normal
+        {
+            isPulsing = false;
+            UpdateButtonVisual();
         }
     }
 

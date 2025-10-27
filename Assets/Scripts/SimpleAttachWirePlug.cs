@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
-
 /// <summary>
-/// Version mejorada para conectar cables - Compatible con XR Interaction Toolkit
+/// Version SIMPLIFICADA para conectar cables - Funciona con cualquier Grabbable
 /// </summary>
 public class SimpleAttachWirePlug : MonoBehaviour
 {
@@ -15,7 +13,7 @@ public class SimpleAttachWirePlug : MonoBehaviour
 
     [Header("Atraccion Magnetica")]
     [SerializeField] private float magneticRange = 0.15f; // Rango de atraccion magnetica
-    [SerializeField] private float snapSpeed = 5f; // Velocidad de ajuste magnetico
+    [SerializeField] private float velocityThreshold = 0.1f; // Velocidad minima para considerar "soltado"
 
     [Header("Audio")]
     [SerializeField] private AudioClip plugSound;
@@ -23,8 +21,8 @@ public class SimpleAttachWirePlug : MonoBehaviour
     private GameObject connectedPlug;
     private AudioSource audioSource;
     private bool isPlugged = false;
-    private XRGrabInteractable currentGrabbable;
     private GameObject potentialPlug; // Cable que esta cerca pero no conectado
+    private float timeInTrigger = 0f;
 
     void Start()
     {
@@ -35,7 +33,7 @@ public class SimpleAttachWirePlug : MonoBehaviour
 
     void Update()
     {
-        // Si hay un cable cerca pero no conectado, atraerlo magneticamente
+        // Si hay un cable cerca pero no conectado, verificar si debe conectarse
         if (!isPlugged && potentialPlug != null)
         {
             CheckMagneticSnap();
@@ -51,6 +49,7 @@ public class SimpleAttachWirePlug : MonoBehaviour
         if (!isPlugged && other.gameObject.CompareTag("Plug"))
         {
             potentialPlug = other.gameObject;
+            timeInTrigger = 0f;
         }
     }
 
@@ -62,27 +61,37 @@ public class SimpleAttachWirePlug : MonoBehaviour
         if (other.gameObject == potentialPlug)
         {
             potentialPlug = null;
+            timeInTrigger = 0f;
         }
     }
 
     /// <summary>
     /// Verifica si el cable debe conectarse magneticamente
+    /// LOGICA SIMPLE: Si el cable esta cerca Y casi sin moverse, conectar
     /// </summary>
     private void CheckMagneticSnap()
     {
         if (potentialPlug == null) return;
 
-        // Obtener el XRGrabInteractable del cable
-        XRGrabInteractable grabbable = potentialPlug.GetComponent<XRGrabInteractable>();
-        
-        // Si el cable NO esta siendo agarrado y esta dentro del rango, conectarlo
-        if (grabbable != null && !grabbable.isSelected)
+        timeInTrigger += Time.deltaTime;
+
+        // Esperar un poco antes de intentar conectar (para dar tiempo al jugador de soltar)
+        if (timeInTrigger < 0.1f) return;
+
+        Rigidbody rb = potentialPlug.GetComponent<Rigidbody>();
+        if (rb != null)
         {
-            float distance = Vector3.Distance(transform.position, potentialPlug.transform.position);
+            // Si el cable esta casi quieto (fue soltado)
+            float velocity = rb.linearVelocity.magnitude;
             
-            if (distance <= magneticRange)
+            if (velocity < velocityThreshold)
             {
-                ConnectWire(potentialPlug);
+                float distance = Vector3.Distance(transform.position, potentialPlug.transform.position);
+                
+                if (distance <= magneticRange)
+                {
+                    ConnectWire(potentialPlug);
+                }
             }
         }
     }
@@ -95,24 +104,16 @@ public class SimpleAttachWirePlug : MonoBehaviour
         isPlugged = true;
         connectedPlug = wire;
         potentialPlug = null;
+        timeInTrigger = 0f;
 
-        // Liberar el cable de la mano VR si esta siendo agarrado
-        XRGrabInteractable grabbable = wire.GetComponent<XRGrabInteractable>();
-        if (grabbable != null)
+        // Deshabilitar TODOS los Grabbables que pueda tener
+        MonoBehaviour[] allComponents = wire.GetComponents<MonoBehaviour>();
+        foreach (var comp in allComponents)
         {
-            currentGrabbable = grabbable;
-            
-            // Forzar liberacion si esta agarrado
-            if (grabbable.isSelected)
+            if (comp != null && comp.GetType().Name.Contains("Grabbable"))
             {
-                foreach (var interactor in grabbable.interactorsSelecting)
-                {
-                    (interactor as UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor)?.interactionManager.SelectExit(interactor, grabbable);
-                }
+                comp.enabled = false;
             }
-            
-            // Deshabilitar agarre mientras esta conectado
-            grabbable.enabled = false;
         }
 
         // Hacer el cable completamente estatico
@@ -187,10 +188,14 @@ public class SimpleAttachWirePlug : MonoBehaviour
         // Desparentar el cable
         connectedPlug.transform.SetParent(null);
 
-        // Rehabilitar componentes del cable
-        if (currentGrabbable != null)
+        // Rehabilitar TODOS los Grabbables
+        MonoBehaviour[] allComponents = connectedPlug.GetComponents<MonoBehaviour>();
+        foreach (var comp in allComponents)
         {
-            currentGrabbable.enabled = true;
+            if (comp != null && comp.GetType().Name.Contains("Grabbable"))
+            {
+                comp.enabled = true;
+            }
         }
 
         Rigidbody rb = connectedPlug.GetComponent<Rigidbody>();
@@ -208,7 +213,6 @@ public class SimpleAttachWirePlug : MonoBehaviour
 
         // Limpiar referencias
         connectedPlug = null;
-        currentGrabbable = null;
         isPlugged = false;
 
         Debug.Log($"Cable desconectado del socket {outletId}");
