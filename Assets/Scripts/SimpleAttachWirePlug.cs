@@ -47,8 +47,6 @@ public class SimpleAttachWirePlug : MonoBehaviour
         {
             Debug.LogError($"✗✗✗ NO HAY COLLIDER en {gameObject.name} ✗✗✗");
         }
-        
-        Debug.LogWarning("═══════════════════════════════════════");
     }
 
     /// <summary>
@@ -66,7 +64,7 @@ public class SimpleAttachWirePlug : MonoBehaviour
         Debug.LogWarning($"¿Tiene tag 'Plug'?: {other.gameObject.CompareTag("Plug")}");
         
         // Solo aceptar objetos con tag "Plug" que no esten ya conectados
-        if (!isPlugged && other.gameObject.CompareTag("Plug"))
+        if (!isPlugged && (other.gameObject.CompareTag("Plug") || other.gameObject.tag == "PowerSocket"))
         {
             Debug.LogWarning("✓ Condiciones cumplidas - Conectando cable...");
             ConnectWire(other.gameObject);
@@ -138,8 +136,16 @@ public class SimpleAttachWirePlug : MonoBehaviour
         // Informar al controlador
         if (controller != null)
         {
-            Debug.LogWarning($"→ Llamando a controller.OnWirePlugged({wire.name}, {outletId})");
-            controller.OnWirePlugged(wire, outletId);
+            if (wire.tag == "Plug")
+            {
+                Debug.LogWarning($"→ Llamando a controller.OnWirePlugged({wire.name}, {outletId})");
+                controller.OnWirePlugged(wire, outletId);
+            }
+            else if (wire.tag == "PowerSocket")
+            {
+                controller.turnOnScreen();
+                Debug.LogWarning("→ Llamando a controller.turnOnScreen()");
+            }
         }
         else
         {
@@ -157,10 +163,55 @@ public class SimpleAttachWirePlug : MonoBehaviour
     {
         Vector3 startPos = wire.transform.position;
         Quaternion startRot = wire.transform.rotation;
+        Debug.Log($"Posición inicial del cable: {startPos}");
+        Debug.Log($"Rotación inicial del cable (euler): {startRot.eulerAngles}");
+        Debug.Log($"Rotación inicial del cable: {startRot}");
         Vector3 targetPos = transform.position; // Posicion del socket
         Quaternion targetRot = transform.rotation; // Rotacion del socket
         float duration = 0.3f;
         float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.SmoothStep(0f, 1f, elapsed / duration);
+            if (pluggedPosition != null)
+            {
+                Debug.Log(targetPos);
+                targetPos = transform.position + pluggedPosition;
+            }
+
+            wire.transform.position = Vector3.Lerp(startPos, targetPos, t);
+
+            if (pluggedRotation != null)
+            {
+                targetRot = Quaternion.Euler(pluggedRotation.eulerAngles);
+            }
+            wire.transform.rotation = Quaternion.Lerp(startRot, targetRot, t);
+            
+            yield return null;
+        }
+
+        // Asegurar posicion exacta en el socket
+        wire.transform.position = targetPos;
+        wire.transform.rotation = targetRot;
+    }
+
+    /// <summary>
+    /// Mueve el cable a su posicion inicial
+    /// </summary>
+    private IEnumerator MoveWireToInitialPosition(GameObject wire)
+    {
+        Vector3 startPos = wire.transform.position;
+        Quaternion startRot = wire.transform.rotation;
+        float duration = 0.3f;
+        // Posicion inicial guardada
+        Vector3 targetPos = initialPosition;
+        Quaternion targetRot = initialRotation;
+
+        float elapsed = 0f;
+
+        Debug.LogWarning($"Moviendo cable desde {startPos} hacia posición inicial {targetPos}");
 
         while (elapsed < duration)
         {
@@ -172,51 +223,61 @@ public class SimpleAttachWirePlug : MonoBehaviour
 
             yield return null;
         }
-
-        // Asegurar posicion exacta en el socket
-        wire.transform.position = targetPos;
-        wire.transform.rotation = targetRot;
-    }
-
-    /// <summary>
-    /// Desconecta el cable del socket
-    /// </summary>
-    public void detach()
-    {
-        if (!isPlugged || connectedPlug == null) return;
-
-        Debug.LogWarning($"Desconectando cable del socket {outletId}");
-
-        // Rehabilitar componentes del cable
-        MonoBehaviour grabbable = connectedPlug.GetComponent("OVRGrabbable") as MonoBehaviour;
-        if (grabbable == null)
-            grabbable = connectedPlug.GetComponent("Grabbable") as MonoBehaviour;
-            
+        // Habilitar componentes nuevamente
+        MonoBehaviour grabbable = wire.GetComponent("Grabbable") as MonoBehaviour;
+        //if (grabbable == null)
+        //    grabbable = wire.GetComponent("Grabbable") as MonoBehaviour;
         if (grabbable != null)
         {
             grabbable.enabled = true;
+            Debug.Log("Grabbable re-habilitado");
         }
 
-        Rigidbody rb = connectedPlug.GetComponent<Rigidbody>();
+        Rigidbody rb = wire.GetComponent<Rigidbody>();
         if (rb != null)
         {
             rb.isKinematic = false;
+            rb.useGravity = true;
+            Debug.Log("Rigidbody restaurado");
         }
 
-        Collider col = connectedPlug.GetComponent<Collider>();
+        Collider col = wire.GetComponent<Collider>();
         if (col != null)
         {
             col.enabled = true;
+            Debug.LogWarning("Collider habilitado");
         }
 
-        // Reproducir sonido
-        if (plugSound != null)
-            audioSource.PlayOneShot(plugSound);
+        // Asegurar posicion exacta
+        wire.transform.position = targetPos;
+        wire.transform.rotation = targetRot;
 
-        // Limpiar referencias
+        Debug.LogWarning($"Cable retornado a posición inicial: {wire.transform.position}");
+    }
+
+    /// <summary>
+    /// Desconecta el cable del socket y lo devuelve a su posicion inicial
+    /// </summary>
+    public void Detach()
+    {
+        if (!isPlugged || connectedPlug == null)
+        {
+            Debug.LogWarning($"Socket {outletId} - No hay cable para desconectar");
+            return;
+        }
+
+        Debug.LogWarning("");
+        Debug.LogWarning($"╔════════════════════════════════════════╗");
+        Debug.LogWarning($"║   DESCONECTANDO CABLE del Socket {outletId}    ║");
+        Debug.LogWarning($"╚════════════════════════════════════════╝");
+        // Mover a posicion inicial
+        StartCoroutine(MoveWireToInitialPosition(connectedPlug));
+
+        // Limpiar estado
         connectedPlug = null;
         isPlugged = false;
 
-        Debug.LogWarning($"Cable desconectado del socket {outletId}");
+        Debug.LogWarning($"✓ Cable desconectado del socket {outletId}");
+        Debug.LogWarning("═══════════════════════════════════════");
     }
 }

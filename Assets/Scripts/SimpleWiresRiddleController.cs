@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// Controller simplificado del puzzle de cables - Solo muestra WIN cuando se completa
@@ -9,9 +8,11 @@ using UnityEngine.UI;
 public class SimpleWiresRiddleController : MonoBehaviour
 {
     [Header("Configuración del Puzzle")]
+    [SerializeField] public GameObject[] screens;
     [SerializeField] private GameObject[] correctPlugArr; // Los 5 cables en el orden correcto
     [SerializeField] private SimpleAttachWirePlug[] socketArr;  // Los 5 sockets
     [SerializeField] private AudioClip wrongSound;        // Sonido de error
+    [SerializeField] private AudioClip winSound;          // 🔊 Nuevo: sonido al completar puzzle
 
     [Header("Botón a Habilitar")]
     [SerializeField] private ButtonPushOpenDoor buttonController; // Referencia al botón
@@ -23,7 +24,10 @@ public class SimpleWiresRiddleController : MonoBehaviour
     void Start()
     {
         outletArr = new GameObject[5];
-        
+        foreach (GameObject screen in screens)
+        {
+            screen.SetActive(false);
+        }
         Debug.LogWarning("╔════════════════════════════════════════╗");
         Debug.LogWarning("║   PUZZLE DE CABLES INICIANDO           ║");
         Debug.LogWarning("╚════════════════════════════════════════╝");
@@ -31,6 +35,19 @@ public class SimpleWiresRiddleController : MonoBehaviour
         Debug.LogWarning($"Cables correctos configurados: {correctPlugArr.Length}");
         Debug.LogWarning($"Sockets configurados: {socketArr.Length}");
         Debug.LogWarning("═══════════════════════════════════════");
+    }
+
+
+    /// <summary>
+    /// Turn on the screen with the solution of the wires placement
+    /// </summary>
+    public void turnOnScreen()
+    {
+        foreach (GameObject screen in screens)
+        {
+            screen.SetActive(true);
+            GameManager.Instance.UpdateGameState(RiddlesProgress.PowerPlugged);
+        }
     }
 
     /// <summary>
@@ -79,9 +96,6 @@ public class SimpleWiresRiddleController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Cuenta cuántos cables están conectados
-    /// </summary>
     private int CountConnectedWires()
     {
         int count = 0;
@@ -93,9 +107,6 @@ public class SimpleWiresRiddleController : MonoBehaviour
         return count;
     }
 
-    /// <summary>
-    /// Verifica si todos los cables están conectados
-    /// </summary>
     private bool AllWiresPlugged()
     {
         for (int i = 0; i < 5; i++)
@@ -106,9 +117,6 @@ public class SimpleWiresRiddleController : MonoBehaviour
         return true;
     }
 
-    /// <summary>
-    /// Verifica si la solución es correcta
-    /// </summary>
     private void CheckSolution()
     {
         Debug.LogWarning("");
@@ -144,19 +152,22 @@ public class SimpleWiresRiddleController : MonoBehaviour
         PuzzleCompleted();
     }
 
-    /// <summary>
-    /// Se ejecuta cuando el puzzle se completa correctamente
-    /// </summary>
     private void PuzzleCompleted()
     {
         if (puzzleCompleted) return;
 
         puzzleCompleted = true;
-        
-        Debug.LogWarning("");
-        Debug.LogWarning("╔════════════════════════════════════════╗");
-        Debug.LogWarning("║   🎉🎉🎉 PUZZLE COMPLETADO 🎉🎉🎉      ║");
-        Debug.LogWarning("╚════════════════════════════════════════╝");
+       
+        // Reproducir sonido de victoria
+        if (winSound != null)
+        {
+            AudioSource.PlayClipAtPoint(winSound, transform.position);
+            Debug.LogWarning("→ Sonido de victoria reproducido!");
+        }
+        else
+        {
+            Debug.LogWarning("⚠ No hay sonido de victoria asignado");
+        }
 
         // Habilitar el botón para abrir la puerta
         if (buttonController != null)
@@ -178,9 +189,6 @@ public class SimpleWiresRiddleController : MonoBehaviour
         ShowWinMessage();
     }
 
-    /// <summary>
-    /// Muestra el mensaje de victoria
-    /// </summary>
     private void ShowWinMessage()
     {
         Debug.LogWarning("╔════════════════════════════════════════╗");
@@ -189,20 +197,20 @@ public class SimpleWiresRiddleController : MonoBehaviour
         Debug.LogWarning("╚════════════════════════════════════════╝");
     }
 
-    /// <summary>
-    /// Resetea el puzzle (opcional - para reiniciar)
-    /// </summary>
     public void ResetPuzzle()
     {
+        if (correctlyPluggedCounter >= 5)
+        {
+            return;
+        }
         puzzleCompleted = false;
         correctlyPluggedCounter = 0;
         outletArr = new GameObject[5];
 
-        // Desconectar todos los cables
         foreach (SimpleAttachWirePlug socket in socketArr)
         {
             if (socket != null)
-                socket.detach();
+                socket.Detach();
         }
 
         Debug.LogWarning("Puzzle reseteado!");

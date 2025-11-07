@@ -14,8 +14,11 @@ public class ButtonPushOpenDoor : MonoBehaviour
     [Header("Indicador Visual (Opcional)")]
     [SerializeField] private Light buttonLight; // Luz para indicar estado (roja/verde)
 
-    private XRSimpleInteractable interactable;
+    [SerializeField] public Transform buttonTransform;
 
+
+    private XRSimpleInteractable interactable;
+    Renderer buttonRender;
     void Start()
     {
         Debug.LogWarning("╔════════════════════════════════════════╗");
@@ -26,7 +29,9 @@ public class ButtonPushOpenDoor : MonoBehaviour
         
         // Configurar el interactable
         interactable = GetComponent<XRSimpleInteractable>();
-        
+        buttonRender = buttonTransform.GetComponent<Renderer>();
+        Debug.Log("####### Button render####");
+        Debug.Log(buttonRender.name);
         if (interactable != null)
         {
             Debug.LogWarning("✓ XRSimpleInteractable encontrado");
