@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Plug
   - PowerSocket
+  - SpaceRock
   layers:
   - Default
   - TransparentFX

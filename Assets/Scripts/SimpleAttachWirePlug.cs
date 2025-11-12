@@ -19,6 +19,7 @@ public class SimpleAttachWirePlug : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private AudioClip plugSound;
+    [SerializeField] private AudioClip Sound;
 
     private GameObject connectedPlug;
     private AudioSource audioSource;
@@ -131,7 +132,17 @@ public class SimpleAttachWirePlug : MonoBehaviour
 
         // Reproducir sonido
         if (plugSound != null)
+        {
             audioSource.PlayOneShot(plugSound);
+        }
+        //if (wire.tag == "PowerSocket")
+        //{
+        //    audioSource.PlayOneShot(Sound);
+        //}
+        //else
+        //{
+        //    audioSource.PlayOneShot(plugSound);
+        //}
 
         // Informar al controlador
         if (controller != null)

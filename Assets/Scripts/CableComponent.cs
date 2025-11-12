@@ -2,7 +2,6 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-
 public class CableComponent : MonoBehaviour
 {
     #region Class members
@@ -21,7 +20,6 @@ public class CableComponent : MonoBehaviour
     [SerializeField] private int verletIterations = 1;
     [SerializeField] private int solverIterations = 1;
 
-
     private LineRenderer line;
     private CableParticle[] points;
 
@@ -36,15 +34,8 @@ public class CableComponent : MonoBehaviour
         InitLineRenderer();
     }
 
-    /**
-	 * Init cable particles
-	 * 
-	 * Creates the cable particles along the cable length
-	 * and binds the start and end tips to their respective game objects.
-	 */
     void InitCableParticles()
     {
-        // Calculate segments to use
         if (totalSegments > 0)
             segments = totalSegments;
         else
@@ -54,31 +45,30 @@ public class CableComponent : MonoBehaviour
         float initialSegmentLength = cableLength / segments;
         points = new CableParticle[segments + 1];
 
-        // Foreach point
         for (int pointIdx = 0; pointIdx <= segments; pointIdx++)
         {
-            // Initial position
             Vector3 initialPosition = transform.position + (cableDirection * (initialSegmentLength * pointIdx));
             points[pointIdx] = new CableParticle(initialPosition);
         }
 
-        // Bind start and end particles with their respective gameobjects
         CableParticle start = points[0];
         CableParticle end = points[segments];
         start.Bind(this.transform);
         end.Bind(endPoint.transform);
     }
 
-    /**
-	 * Initialized the line renderer
-	 */
     void InitLineRenderer()
     {
         line = this.gameObject.AddComponent<LineRenderer>();
+#if UNITY_2022_1_OR_NEWER
+        line.startWidth = cableWidth;
+        line.endWidth = cableWidth;
+#else
         line.SetWidth(cableWidth, cableWidth);
-        line.SetVertexCount(segments + 1);
+#endif
+        line.positionCount = segments + 1;
         line.material = cableMaterial;
-        line.GetComponent<Renderer>().enabled = true;
+        line.enabled = true;
     }
 
     #endregion
@@ -91,11 +81,6 @@ public class CableComponent : MonoBehaviour
         RenderCable();
     }
 
-    /**
-	 * Render Cable
-	 * 
-	 * Update every particle position in the line renderer.
-	 */
     void RenderCable()
     {
         for (int pointIdx = 0; pointIdx < segments + 1; pointIdx++)
@@ -118,11 +103,6 @@ public class CableComponent : MonoBehaviour
         }
     }
 
-    /**
-	 * Verler integration pass
-	 * 
-	 * In this step every particle updates its position and speed.
-	 */
     void VerletIntegrate()
     {
         Vector3 gravityDisplacement = Time.fixedDeltaTime * Time.fixedDeltaTime * Physics.gravity;
@@ -132,14 +112,8 @@ public class CableComponent : MonoBehaviour
         }
     }
 
-    /**
-	 * Constrains solver pass
-	 * 
-	 * In this step every constraint is addressed in sequence
-	 */
     void SolveConstraints()
     {
-        // For each solver iteration..
         for (int iterationIdx = 0; iterationIdx < solverIterations; iterationIdx++)
         {
             SolveDistanceConstraint();
@@ -152,9 +126,6 @@ public class CableComponent : MonoBehaviour
 
     #region Solver Constraints
 
-    /**
-	 * Distance constraint for each segment / pair of particles
-	 **/
     void SolveDistanceConstraint()
     {
         float segmentLength = cableLength / segments;
@@ -163,25 +134,16 @@ public class CableComponent : MonoBehaviour
             CableParticle particleA = points[SegIdx];
             CableParticle particleB = points[SegIdx + 1];
 
-            // Solve for this pair of particles
             SolveDistanceConstraint(particleA, particleB, segmentLength);
         }
     }
 
-    /**
-	 * Distance Constraint 
-	 * 
-	 * This is the main constrains that keeps the cable particles "tied" together.
-	 */
     void SolveDistanceConstraint(CableParticle particleA, CableParticle particleB, float segmentLength)
     {
-        // Find current vector between particles
         Vector3 delta = particleB.Position - particleA.Position;
-        // 
         float currentDistance = delta.magnitude;
         float errorFactor = (currentDistance - segmentLength) / currentDistance;
 
-        // Only move free particles to satisfy constraints
         if (particleA.IsFree() && particleB.IsFree())
         {
             particleA.Position += errorFactor * 0.5f * delta;
@@ -197,9 +159,6 @@ public class CableComponent : MonoBehaviour
         }
     }
 
-    /**
-	 * Stiffness constraint
-	 **/
     void SolveStiffnessConstraint()
     {
         float distance = (points[0].Position - points[segments].Position).magnitude;
@@ -212,18 +171,48 @@ public class CableComponent : MonoBehaviour
         }
     }
 
-    /**
-	 * TODO: I'll implement this constraint to reinforce cable stiffness 
-	 * 
-	 * As the system has more particles, the verlet integration aproach 
-	 * may get way too loose cable simulation. This constraint is intended 
-	 * to reinforce the cable stiffness.
-	 * // throw new System.NotImplementedException ();
-	 **/
     void SolveStiffnessConstraint(CableParticle cableParticle, float distance)
     {
+        // Optional: Implement later if needed for cable stiffness.
+    }
+
+    #endregion
 
 
+    #region Color Control
+
+    /// <summary>
+    /// Dynamically changes the cable's material color and emission.
+    /// </summary>
+    public void SetCableColor(Color color)
+    {
+        if (line == null || line.material == null)
+        {
+            Debug.LogWarning("Cable material not assigned or line renderer missing!");
+            return;
+        }
+
+        Debug.Log("Setting cable color to: " + color.ToString());
+
+        // Work with a unique instance, not the shared material
+        Material matInstance = line.material;
+
+        // Set main (albedo) color
+        matInstance.color = color;
+        matInstance.SetColor("_Color", color);
+
+        // Handle emission if enabled
+        if (matInstance.IsKeywordEnabled("_EMISSION"))
+        {
+            // Multiply by intensity for visibility in dark environments
+            matInstance.SetColor("_EmissionColor", color * 2f);
+        }
+        else
+        {
+            // Ensure emission is on
+            matInstance.EnableKeyword("_EMISSION");
+            matInstance.SetColor("_EmissionColor", color * 2f);
+        }
     }
 
     #endregion

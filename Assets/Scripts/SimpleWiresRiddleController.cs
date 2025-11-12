@@ -3,23 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Controller simplificado del puzzle de cables - Solo muestra WIN cuando se completa
+/// Controller simplificado del puzzle de cables - con penalización por errores
 /// </summary>
 public class SimpleWiresRiddleController : MonoBehaviour
 {
-    [Header("Configuración del Puzzle")]
+    [Header("Puzzle Configuration")]
     [SerializeField] public GameObject[] screens;
     [SerializeField] private GameObject[] correctPlugArr; // Los 5 cables en el orden correcto
     [SerializeField] private SimpleAttachWirePlug[] socketArr;  // Los 5 sockets
-    [SerializeField] private AudioClip wrongSound;        // Sonido de error
-    [SerializeField] private AudioClip winSound;          // 🔊 Nuevo: sonido al completar puzzle
 
-    [Header("Botón a Habilitar")]
-    [SerializeField] private ButtonPushOpenDoor buttonController; // Referencia al botón
+    [Header("Audio Settings")]
+    [SerializeField] private AudioClip wrongSound;        // Sonido al conectar mal
+    [SerializeField] private AudioClip winSound;          // Sonido al completar puzzle
 
-    private GameObject[] outletArr;                       // Cables actualmente conectados
-    private int correctlyPluggedCounter = 0;              // Contador de cables correctos
-    private bool puzzleCompleted = false;                 // Evita múltiples victorias
+    [Header("Button / Door Configuration")]
+    [SerializeField] private ButtonPushOpenDoor buttonController;
+    [SerializeField] private Animator animator;
+    [SerializeField] private string boolName = "Open";
+
+    [Header("Timer Reference")]
+    [Tooltip("Referencia al script de luz de emergencia que maneja el tiempo del juego")]
+    [SerializeField] private EmergencyLight emergencyLight;
+
+    [Tooltip("Cantidad de segundos que se restan al tiempo por cada error")]
+    [SerializeField] private float timePenalty = 5f;
+
+    private GameObject[] outletArr;  // Cables actualmente conectados
+    private int correctlyPluggedCounter = 0;
+    private bool puzzleCompleted = false;
 
     void Start()
     {
@@ -28,15 +39,11 @@ public class SimpleWiresRiddleController : MonoBehaviour
         {
             screen.SetActive(false);
         }
-        Debug.LogWarning("╔════════════════════════════════════════╗");
-        Debug.LogWarning("║   PUZZLE DE CABLES INICIANDO           ║");
-        Debug.LogWarning("╚════════════════════════════════════════╝");
-        Debug.LogWarning($"Botón asignado: {(buttonController != null ? "SÍ ✓" : "NO ✗")}");
-        Debug.LogWarning($"Cables correctos configurados: {correctPlugArr.Length}");
-        Debug.LogWarning($"Sockets configurados: {socketArr.Length}");
-        Debug.LogWarning("═══════════════════════════════════════");
-    }
 
+        //// Subscribe to time over event
+        //if (emergencyLight != null)
+        //    emergencyLight.OnTimeOver += HandleGameOver;
+    }
 
     /// <summary>
     /// Turn on the screen with the solution of the wires placement
@@ -55,61 +62,60 @@ public class SimpleWiresRiddleController : MonoBehaviour
     /// </summary>
     public void OnWirePlugged(GameObject plug, int outletId)
     {
-        Debug.LogWarning("");
-        Debug.LogWarning("╔════════════════════════════════════════╗");
-        Debug.LogWarning("║   CABLE CONECTADO                      ║");
-        Debug.LogWarning("╚════════════════════════════════════════╝");
-        Debug.LogWarning($"Cable: {plug.name}");
-        Debug.LogWarning($"Socket ID: {outletId}");
-        Debug.LogWarning($"Cable esperado: {(correctPlugArr[outletId] != null ? correctPlugArr[outletId].name : "NULL")}");
-        
         if (puzzleCompleted)
         {
             Debug.LogWarning("Puzzle ya completado - ignorando");
             return;
         }
 
-        // Verificar si el cable es correcto para este socket
         bool isCorrect = correctPlugArr[outletId] == plug;
+        outletArr[outletId] = plug;
+
+        // Buscar el componente CableComponent desde el padre (Cable_start)
+        CableComponent cable = plug.GetComponent<CableComponent>();
+        if (cable == null && plug.transform.parent != null)
+            cable = plug.transform.parent.GetComponentInChildren<CableComponent>();
+
+        // Cambiar color del cable
+        if (cable != null)
+        {
+            cable.SetCableColor(isCorrect ? Color.green : Color.red);
+        }
+
+        // Reacciones según sea correcto o incorrecto
         if (isCorrect)
         {
             correctlyPluggedCounter++;
-            Debug.LogWarning($"✓ CORRECTO! ({correctlyPluggedCounter}/5)");
+            Debug.Log($"Cable {plug.name} correcto ({correctlyPluggedCounter}/5)");
         }
         else
         {
-            Debug.LogWarning($"✗ INCORRECTO");
+            Debug.LogWarning($"Cable {plug.name} incorrecto");
+
+            // Reproducir sonido de error
+            if (wrongSound != null)
+                AudioSource.PlayClipAtPoint(wrongSound, transform.position);
+
+            // Aplicar penalización de tiempo
+            if (emergencyLight != null)
+            {
+                float remaining = emergencyLight.GetRemainingTime();
+                float newTime = Mathf.Max(remaining - timePenalty, 0f);
+                emergencyLight.ResetTimer(newTime);
+                Debug.LogWarning($"Tiempo penalizado: -{timePenalty}s (restante: {newTime:F1}s)");
+            }
         }
 
-        // Guardar el cable conectado
-        outletArr[outletId] = plug;
-
-        // Mostrar estado actual
-        Debug.LogWarning($"Cables conectados: {CountConnectedWires()}/5");
-        Debug.LogWarning("═══════════════════════════════════════");
-
-        // Verificar si todos los cables están conectados
         if (AllWiresPlugged())
         {
-            Debug.LogWarning("¡Todos los cables conectados! Verificando solución...");
+            Debug.LogWarning("Todos los cables conectados. Verificando solución...");
             CheckSolution();
         }
     }
 
-    private int CountConnectedWires()
-    {
-        int count = 0;
-        for (int i = 0; i < 5; i++)
-        {
-            if (outletArr[i] != null)
-                count++;
-        }
-        return count;
-    }
-
     private bool AllWiresPlugged()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < outletArr.Length; i++)
         {
             if (outletArr[i] == null)
                 return false;
@@ -119,100 +125,81 @@ public class SimpleWiresRiddleController : MonoBehaviour
 
     private void CheckSolution()
     {
-        Debug.LogWarning("");
-        Debug.LogWarning("╔════════════════════════════════════════╗");
-        Debug.LogWarning("║   VERIFICANDO SOLUCIÓN                 ║");
-        Debug.LogWarning("╚════════════════════════════════════════╝");
-        
-        // Verificar si todos los cables están en la posición correcta
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < correctPlugArr.Length; i++)
         {
-            Debug.LogWarning($"Socket {i}: {outletArr[i].name} == {correctPlugArr[i].name} ? {(outletArr[i] == correctPlugArr[i])}");
-            
             if (outletArr[i] != correctPlugArr[i])
             {
-                // Solución incorrecta
-                Debug.LogWarning("╔════════════════════════════════════════╗");
-                Debug.LogWarning("║   ✗✗✗ SOLUCIÓN INCORRECTA ✗✗✗         ║");
-                Debug.LogWarning("║   Algunos cables están mal conectados  ║");
-                Debug.LogWarning("╚════════════════════════════════════════╝");
-                
-                if (wrongSound != null)
-                    AudioSource.PlayClipAtPoint(wrongSound, transform.position);
-                
+                Debug.LogWarning("Solución incorrecta. Algunos cables están mal conectados.");
+
+                // Ya reproducimos el sonido y penalizamos al conectar mal, así que solo salimos
                 return;
             }
         }
 
-        // ¡Solución correcta!
-        Debug.LogWarning("╔════════════════════════════════════════╗");
-        Debug.LogWarning("║   ✓✓✓ SOLUCIÓN CORRECTA ✓✓✓           ║");
-        Debug.LogWarning("╚════════════════════════════════════════╝");
-        
+        // Si todos coinciden → Victoria
         PuzzleCompleted();
     }
 
     private void PuzzleCompleted()
     {
         if (puzzleCompleted) return;
-
         puzzleCompleted = true;
-       
-        // Reproducir sonido de victoria
+
+        Debug.Log("Puzzle completado correctamente!");
+
+        // Sonido de victoria
         if (winSound != null)
-        {
             AudioSource.PlayClipAtPoint(winSound, transform.position);
-            Debug.LogWarning("→ Sonido de victoria reproducido!");
-        }
-        else
+
+        // Animación de puerta
+        if (animator != null)
         {
-            Debug.LogWarning("⚠ No hay sonido de victoria asignado");
+            bool wasOpen = animator.GetBool(boolName);
+            animator.SetBool(boolName, !wasOpen);
+            Debug.Log("Puerta abierta automáticamente.");
         }
 
-        // Habilitar el botón para abrir la puerta
+        // Habilitar botón (opcional)
         if (buttonController != null)
-        {
-            Debug.LogWarning("→ Llamando a buttonController.EnableButton()...");
             buttonController.EnableButton();
-            Debug.LogWarning("→ Botón habilitado exitosamente!");
-        }
-        else
-        {
-            Debug.LogError("╔════════════════════════════════════════╗");
-            Debug.LogError("║   ✗✗✗ ERROR CRÍTICO ✗✗✗               ║");
-            Debug.LogError("║   No hay botón asignado                ║");
-            Debug.LogError("║   Asigna BigRedButton en el Inspector  ║");
-            Debug.LogError("╚════════════════════════════════════════╝");
-        }
-
-        // Mostrar mensaje de victoria
-        ShowWinMessage();
-    }
-
-    private void ShowWinMessage()
-    {
-        Debug.LogWarning("╔════════════════════════════════════════╗");
-        Debug.LogWarning("║   ¡FELICIDADES!                        ║");
-        Debug.LogWarning("║   ¡Ahora puedes abrir la puerta!       ║");
-        Debug.LogWarning("╚════════════════════════════════════════╝");
     }
 
     public void ResetPuzzle()
     {
-        if (correctlyPluggedCounter >= 5)
-        {
-            return;
-        }
         puzzleCompleted = false;
         correctlyPluggedCounter = 0;
         outletArr = new GameObject[5];
 
-        foreach (SimpleAttachWirePlug socket in socketArr)
+        // Desconectar todos los sockets
+        foreach (var socket in socketArr)
         {
             if (socket != null)
                 socket.Detach();
         }
 
-        Debug.LogWarning("Puzzle reseteado!");
+        // Restaurar color de los cables
+        foreach (var plug in correctPlugArr)
+        {
+            if (plug != null)
+            {
+                CableComponent cable = plug.GetComponent<CableComponent>();
+                if (cable == null && plug.transform.parent != null)
+                    cable = plug.transform.parent.GetComponentInChildren<CableComponent>();
+
+                if (cable != null)
+                    cable.SetCableColor(Color.white);
+            }
+        }
+
+        Debug.Log("Puzzle reseteado y colores restaurados.");
     }
+
+    //private void HandleGameOver()
+    //{
+    //    Debug.LogWarning("Time’s up! Game Over.");
+    //    puzzleCompleted = true;
+
+    //    if (gameOverUI != null)
+    //        gameOverUI.ShowGameOver();
+    //}
 }
